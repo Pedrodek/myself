@@ -101,6 +101,24 @@ class TestI18n:
         assert load_translations("pt", tmp_path).gettext("Skills") == "Skills"
 
 
+def test_htmx_fragment_rules() -> None:
+    from starlette.requests import Request
+
+    def request(headers: dict[str, str]) -> Request:
+        raw = [(k.lower().encode(), v.encode()) for k, v in headers.items()]
+        return Request({"type": "http", "headers": raw})
+
+    assert not wants_fragment(request({}))
+    assert wants_fragment(request({"HX-Request": "true"}))
+    assert not wants_fragment(request({"HX-Request": "true", "HX-History-Restore-Request": "true"}))
+
+
+def test_slugify_and_reading_time() -> None:
+    assert slugify("Solução & Arquitetura!") == "solucao-arquitetura"
+    assert slugify("???") == "section"
+    assert reading_minutes("palavra " * 450) == 3 and reading_minutes("") == 1
+
+
 class TestMarkdown:
     def test_raw_html_is_not_rendered(self) -> None:
         html, _ = render_markdown("<script>alert(1)</script>\n\n<b>x</b>")

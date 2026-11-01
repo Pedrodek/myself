@@ -109,3 +109,8 @@ class Settings(BaseSettings):
     def ws_url(self) -> str:
         scheme = "wss" if urlsplit(self.site_url).scheme == "https" else "ws"
         return f"{scheme}://{self.site_host}"
+
+
+@lru_cache
+def get_settings() -> Settings:
+    return Settings()
