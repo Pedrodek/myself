@@ -6,10 +6,12 @@ VARY = "HX-Request, HX-History-Restore-Request"
 
 
 def is_htmx(request: Request) -> bool:
+    """True for any request issued by htmx (``HX-Request: true``)."""
     return request.headers.get("HX-Request") == "true"
 
 
 def is_history_restore(request: Request) -> bool:
+    """True when htmx is restoring a page after a history-cache miss."""
     return request.headers.get("HX-History-Restore-Request") == "true"
 
 

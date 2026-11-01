@@ -41,10 +41,23 @@ PROFILES = ("default", "charts", "terminal", "playground", "sandbox", "apidocs")
 
 
 def _serialize(directives: Mapping[str, Sequence[str]]) -> str:
+    """Join directives into a CSP header value (``name v1 v2; name v1``)."""
     return "; ".join(f"{name} {' '.join(values)}".strip() for name, values in directives.items())
 
 
 def csp_for(profile: str, settings: Settings) -> str:
+    """Build the ``Content-Security-Policy`` value for a named profile.
+
+    Args:
+        profile: One of :data:`PROFILES`.
+        settings: Provides the WebSocket origin for the ``terminal`` profile.
+
+    Returns:
+        The header value.
+
+    Raises:
+        ValueError: If ``profile`` is unknown.
+    """
     if profile == "sandbox":
         return SANDBOX_CSP
     directives = {name: list(values) for name, values in DEFAULT_DIRECTIVES.items()}
@@ -67,6 +80,7 @@ def csp_for(profile: str, settings: Settings) -> str:
 
 
 def static_security_headers(settings: Settings) -> dict[str, str]:
+    """Headers added to every response (nosniff, referrer, permissions, COOP and optional HSTS)."""
     headers = {
         "X-Content-Type-Options": "nosniff",
         "Referrer-Policy": "strict-origin-when-cross-origin",
@@ -82,16 +96,19 @@ class SecurityHeadersMiddleware:
     """Adds the security headers and the default CSP unless the route already chose a profile."""
 
     def __init__(self, app: ASGIApp, settings: Settings) -> None:
+        """Precompute the headers once; they do not change between requests."""
         self.app = app
         self.static_headers = static_security_headers(settings)
         self.default_csp = csp_for("default", settings)
 
     async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
+        """Add the headers to the response start, never overriding what a route already set."""
         if scope["type"] != "http":
             await self.app(scope, receive, send)
             return
 
         async def send_with_headers(message: Message) -> None:
+            """Decorate the ``http.response.start`` message, pass everything else through."""
             if message["type"] == "http.response.start":
                 headers = MutableHeaders(scope=message)
                 for name, value in self.static_headers.items():

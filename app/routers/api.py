@@ -19,6 +19,8 @@ docs_router = APIRouter(include_in_schema=False)
 
 
 class ProjectSummary(BaseModel):
+    """A project without its (large) rendered body, used in list responses."""
+
     slug: str
     title: str
     summary: str
@@ -31,6 +33,7 @@ class ProjectSummary(BaseModel):
 
     @classmethod
     def of(cls, project: Project) -> "ProjectSummary":
+        """Build a summary from a full project, copying only the fields declared here."""
         return cls(**project.model_dump(include=set(cls.model_fields)))
 
 
@@ -38,6 +41,7 @@ def api_content(
     request: Request,
     lang: Annotated[Literal["pt", "en"] | None, Query(description="Content language")] = None,
 ) -> LocaleContent:
+    """Dependency: select the content language from ``?lang=`` (default: site default)."""
     locale = lang or request.app.state.settings.default_locale
     content: LocaleContent = request.app.state.content.get(locale)
     return content
@@ -48,12 +52,14 @@ ApiContent = Annotated[LocaleContent, Depends(api_content)]
 
 @router.get("/profile")
 async def get_profile(content: ApiContent, response: Response) -> Profile:
+    """Name, headline, summary, location, contact and links."""
     response.headers["Cache-Control"] = CACHE
     return content.profile
 
 
 @router.get("/skills")
 async def get_skills(content: ApiContent, response: Response) -> tuple[SkillGroup, ...]:
+    """Skills grouped by category, with level (1-5), years and the projects that prove them."""
     response.headers["Cache-Control"] = CACHE
     return content.skill_groups
 
@@ -64,12 +70,14 @@ async def get_experience(
     response: Response,
     tech: Annotated[str | None, Query(max_length=64, pattern=SLUG_PATTERN)] = None,
 ) -> list[Experience]:
+    """Work history, optionally limited to jobs that used the skill ``tech`` (a skill slug)."""
     response.headers["Cache-Control"] = CACHE
     return content.filter_experience(tech)
 
 
 @router.get("/education")
 async def get_education(content: ApiContent, response: Response) -> tuple[Education, ...]:
+    """Education, courses and certificates."""
     response.headers["Cache-Control"] = CACHE
     return content.education
 
@@ -81,12 +89,14 @@ async def get_projects(
     q: Annotated[str | None, Query(max_length=80)] = None,
     tag: Annotated[str | None, Query(max_length=40)] = None,
 ) -> list[ProjectSummary]:
+    """Project summaries. ``q`` searches text and ``tag`` filters by an exact tag."""
     response.headers["Cache-Control"] = CACHE
     return [ProjectSummary.of(project) for project in content.search_projects(q, tag)]
 
 
 @router.get("/projects/{slug}")
 async def get_project(slug: str, content: ApiContent, response: Response) -> Project:
+    """One project with its full case study rendered as HTML. Returns 404 if it does not exist."""
     project = content.project(slug)
     if project is None:
         raise HTTPException(status_code=404, detail="Project not found")
@@ -102,6 +112,7 @@ SWAGGER_JS_SRI = "sha384-9Td7MKiIr2S83E1kZyyVi8KdJw/S8CpAvu0llLyMeg0xq/hDGiZJfVn
 
 @docs_router.get("/api/docs", response_class=HTMLResponse)
 async def api_docs(settings: SettingsDep) -> HTMLResponse:
+    """Swagger UI page. Script and style are SRI-pinned and allowed only by the ``apidocs`` CSP."""
     page = (
         '<!doctype html><html lang="en"><head><meta charset="utf-8">'
         '<meta name="viewport" content="width=device-width, initial-scale=1">'
@@ -117,6 +128,7 @@ async def api_docs(settings: SettingsDep) -> HTMLResponse:
 
 @docs_router.get("/api/docs/init.js")
 async def api_docs_init() -> Response:
+    """Swagger UI bootstrap, served as a file so the page needs no inline script (CSP)."""
     script = (
         "window.ui = SwaggerUIBundle({url: '/api/openapi.json', dom_id: '#swagger-ui', "
         "deepLinking: true, presets: [SwaggerUIBundle.presets.apis]});"

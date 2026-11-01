@@ -28,12 +28,19 @@ T = TypeVar("T", bound=BaseModel)
 
 
 class ContentError(Exception):
+    """Raised when content is invalid. ``problems`` lists every issue found, not just the first."""
+
     def __init__(self, problems: list[str]) -> None:
+        """Store the problems and join them into the exception message."""
         super().__init__("\n".join(problems))
         self.problems = problems
 
 
 def _read_yaml(path: Path, problems: list[str], *, required: bool = True) -> Any:
+    """Parse a YAML file safely; record a problem and return ``None`` if it is missing or broken.
+
+    Read as ``utf-8-sig`` so files saved with a BOM (common on Windows) still load.
+    """
     if not path.is_file():
         if required:
             problems.append(f"{path.as_posix()}: file not found")
@@ -46,6 +53,7 @@ def _read_yaml(path: Path, problems: list[str], *, required: bool = True) -> Any
 
 
 def _validate(model: type[T], data: Any, source: str, problems: list[str]) -> T | None:
+    """Validate ``data`` against ``model``; on failure add one readable line per error."""
     try:
         return model.model_validate(data)
     except ValidationError as error:
@@ -56,6 +64,7 @@ def _validate(model: type[T], data: Any, source: str, problems: list[str]) -> T 
 
 
 def _validate_list(model: type[T], data: Any, source: str, problems: list[str]) -> tuple[T, ...]:
+    """Validate every entry of a YAML list, keeping the valid ones and reporting the rest."""
     if data is None:
         return ()
     if not isinstance(data, list):
@@ -68,6 +77,7 @@ def _validate_list(model: type[T], data: Any, source: str, problems: list[str]) 
 
 
 def _load_projects(directory: Path, problems: list[str]) -> tuple[Project, ...]:
+    """Load ``projects/*.md``: front matter is validated and the body rendered to HTML."""
     projects: list[Project] = []
     for path in sorted(directory.glob("*.md")):
         source = path.as_posix()
@@ -98,6 +108,7 @@ def _load_projects(directory: Path, problems: list[str]) -> tuple[Project, ...]:
 
 
 def _load_locale(root: Path, locale: str, problems: list[str]) -> LocaleContent | None:
+    """Load one language folder. ``education.yaml`` is optional; the others are required."""
     base = root / locale
     profile = _validate(
         Profile, _read_yaml(base / "profile.yaml", problems), f"{locale}/profile.yaml", problems
@@ -124,6 +135,11 @@ def _load_locale(root: Path, locale: str, problems: list[str]) -> LocaleContent 
 
 
 def _check_references(content: LocaleContent) -> list[str]:
+    """Check cross references inside one locale.
+
+    Skill slugs must be unique, and every slug cited by a project, a job or a skill's
+    ``evidence`` must exist. A job must not end before it starts.
+    """
     locale = content.locale
     problems: list[str] = []
     counts = Counter(skill.slug for group in content.skill_groups for skill in group.skills)
@@ -153,6 +169,11 @@ def _check_references(content: LocaleContent) -> list[str]:
 
 
 def _check_parity(reference: LocaleContent, other: LocaleContent) -> list[str]:
+    """Check that two languages describe the same facts.
+
+    Text may differ, but skills, projects, levels, years, evidence and the dates and
+    technologies of jobs and education must match, so the translations cannot drift apart.
+    """
     tag = f"parity {reference.locale}/{other.locale}"
     problems: list[str] = []
     for label, left, right in (
@@ -189,6 +210,18 @@ def _education_shape(content: LocaleContent) -> list[tuple[date, date | None]]:
 
 
 def load_content(content_dir: Path) -> ContentStore:
+    """Load and validate all content, failing with every problem found.
+
+    Args:
+        content_dir: Folder containing one sub-folder per locale (``pt/``, ``en/``).
+
+    Returns:
+        The immutable store.
+
+    Raises:
+        ContentError: If any file is missing or invalid, a reference is unknown, or the
+            languages are out of parity.
+    """
     problems: list[str] = []
     loaded: dict[str, LocaleContent] = {}
     for locale in LOCALES:

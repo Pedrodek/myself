@@ -43,7 +43,19 @@ HTMX_CONFIG: dict[str, Any] = {
 
 
 class Renderer:
+    """Renders Jinja2 templates for the current request's locale.
+
+    It owns one Jinja ``Environment`` and one gettext catalog per locale, and builds the
+    context shared by every page (profile, navigation, canonical and alternate URLs, JSON-LD).
+    """
+
     def __init__(self, settings: Settings, assets: Assets) -> None:
+        """Compile the translations and build an environment for each locale.
+
+        Args:
+            settings: Application settings (site URL, downloads folder...).
+            assets: Asset resolver exposed to templates as ``static()``.
+        """
         self.settings = settings
         self.assets = assets
         self.translations = {locale: load_translations(locale) for locale in LOCALES}
@@ -54,6 +66,7 @@ class Renderer:
         return self.translations[request.state.locale].gettext(message)
 
     def _duration(self, locale: str, start: date, end: date | None) -> str:
+        """Format the span between two months as ``2 yrs 3 mos`` (``end=None`` means today)."""
         finish = end or datetime.now(UTC).date()
         months = max(1, (finish.year - start.year) * 12 + finish.month - start.month + 1)
         years, rest = divmod(months, 12)
@@ -66,6 +79,7 @@ class Renderer:
         return " ".join(parts)
 
     def _build_environment(self, locale: str) -> Environment:
+        """Create the Jinja environment: autoescape, strict undefined, i18n, globals, filters."""
         env = Environment(
             loader=FileSystemLoader(TEMPLATES_DIR),
             autoescape=select_autoescape(default=True),
@@ -94,12 +108,22 @@ class Renderer:
         return env
 
     def _years(self, locale: str, value: float) -> str:
+        """Format a (possibly fractional) number of years with the right plural form."""
         # ngettext needs an integer to pick the plural form; the printed value can be fractional.
         plural_selector = 1 if value == 1 else 2
         template = self.translations[locale].ngettext("%(n)g year", "%(n)g years", plural_selector)
         return template % {"n": value}
 
     def build_context(self, request: Request, extra: Mapping[str, Any] | None) -> dict[str, Any]:
+        """Assemble the template context shared by all pages.
+
+        Args:
+            request: Current request; ``request.state.locale`` selects the language.
+            extra: Page-specific values. They are applied last and may override shared keys.
+
+        Returns:
+            The context dictionary passed to Jinja.
+        """
         locale: str = request.state.locale
         content = request.app.state.content.get(locale)
         profile = content.profile

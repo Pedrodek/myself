@@ -1,3 +1,8 @@
+{#
+  Full-page layout, used for normal requests. HTMX navigation uses fragment.html instead
+  (selected by the `layout` variable set in app/core/templating.py).
+  Pages extend `layout` and fill `title_tag`, `head_extra` and `content`.
+#}
 {% from "components/macros.html" import icon, nav_menu, lang_switch %}
 <!DOCTYPE html>
 <html lang="{{ html_lang }}" data-locale="{{ locale }}">
@@ -28,12 +33,15 @@
     {% else %}
       <meta name="twitter:card" content="summary">
     {% endif %}
+    {# htmx settings are passed as data in a meta tag: no inline script (CSP). #}
     <meta name="htmx-config" content='{{ htmx_config|tojson }}'>
     <link rel="icon"
           href="{{ static('img/favicon.svg') }}"
           type="image/svg+xml">
     <link rel="stylesheet" href="{{ static('css/app.css') }}">
     {% block head_extra %}{% endblock %}
+    {# Every script is an external file: the CSP forbids inline scripts. theme-init runs
+       blocking to set the theme before first paint; the others are deferred. #}
     <script src="{{ static('js/theme-init.js') }}"></script>
     <script defer src="{{ static('js/app.js') }}"></script>
     <script defer src="{{ static('vendor/alpine-csp.min.js') }}"></script>

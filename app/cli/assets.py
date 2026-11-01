@@ -38,11 +38,13 @@ def sri(data: bytes) -> str:
 
 
 def _read_lock() -> dict[str, Any]:
+    """Read ``assets.lock.json``: pinned URLs, SHA-384 hashes and the Tailwind version."""
     lock: dict[str, Any] = json.loads(LOCK.read_text(encoding="utf-8"))
     return lock
 
 
 def _download(client: httpx2.Client, url: str) -> bytes:
+    """Download ``url`` with up to four attempts and a growing pause between them."""
     last_error: Exception | None = None
     for attempt in range(4):
         try:
@@ -56,13 +58,25 @@ def _download(client: httpx2.Client, url: str) -> bytes:
 
 
 def _plotly_bundle() -> Path:
+    """Locate ``plotly.min.js`` inside the installed plotly wheel."""
     import plotly
 
     return Path(plotly.__file__).resolve().parent / "package_data" / "plotly.min.js"
 
 
 def sync_vendor(update: bool = False) -> None:
-    """Download the vendored files and verify them against ``assets.lock.json``."""
+    """Download the vendored files and verify them against ``assets.lock.json``.
+
+    Files already present with a matching hash are skipped. A downloaded file whose hash does
+    not match the lock aborts the command, which protects against a tampered CDN or package.
+
+    Args:
+        update: Trust the downloads and rewrite the hashes in the lock file. Use only for a
+            deliberate version upgrade.
+
+    Raises:
+        typer.Exit: With code 1 when a hash does not match.
+    """
     lock = _read_lock()
     VENDOR.mkdir(parents=True, exist_ok=True)
     with httpx2.Client(timeout=60, follow_redirects=True) as client:
@@ -104,12 +118,14 @@ def sync_vendor(update: bool = False) -> None:
 
 
 def _write_pygments_css() -> None:
+    """Generate the syntax-highlighting CSS for the light and dark themes."""
     light = HtmlFormatter(style=LIGHT_STYLE).get_style_defs(".highlight")  # type: ignore[no-untyped-call]
     dark = HtmlFormatter(style=DARK_STYLE).get_style_defs(".dark .highlight")  # type: ignore[no-untyped-call]
     PYGMENTS_CSS.write_text(f"{light}\n{dark}\n", encoding="utf-8")
 
 
 def _build_css(target: Path) -> None:
+    """Compile and minify the Tailwind stylesheet with the pinned standalone binary."""
     from pytailwindcss import run
 
     version = _read_lock()["tailwindcss"]
@@ -126,6 +142,10 @@ def _build_css(target: Path) -> None:
 
 
 def _fingerprint(source: Path, relative: str) -> str:
+    """Copy ``source`` to ``dist/`` as ``name.<hash10>.ext`` and return the new relative path.
+
+    The name changes whenever the content changes, so files can be cached forever.
+    """
     digest = hashlib.sha256(source.read_bytes()).hexdigest()[:10]
     path = Path(relative)
     hashed = path.with_name(f"{path.stem}.{digest}{path.suffix}").as_posix()
@@ -170,6 +190,7 @@ def ensure_built() -> None:
 
 
 def _signature() -> tuple[int, float]:
+    """Cheap change detector: file count and newest modification time of the watched files."""
     files = [CSS_SOURCE]
     for directory in (STATIC / "js", STATIC / "img", TEMPLATES):
         files += [path for path in directory.rglob("*") if path.is_file()]

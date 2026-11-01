@@ -1,4 +1,4 @@
-"""Application factory."""
+"""Application factory: wires settings, content, assets, middleware and routers together."""
 
 import logging
 from collections.abc import AsyncIterator
@@ -26,6 +26,24 @@ MAX_FORM_BYTES = 16 * 1024
 
 
 def create_app(settings: Settings | None = None) -> FastAPI:
+    """Build the FastAPI application.
+
+    Content is loaded and validated here, so a broken content file stops the process at
+    startup instead of failing a request later. Shared objects (settings, content, assets,
+    renderer) are stored on ``app.state`` and reached from routes through ``app.routers.deps``.
+
+    Args:
+        settings: Configuration to use. Defaults to the cached environment-based settings;
+            tests pass their own instance.
+
+    Returns:
+        The configured application, ready to be served by an ASGI server.
+
+    Raises:
+        RuntimeError: In production when the sample content is still active and
+            ``HUB_ALLOW_SAMPLE_CONTENT`` is not set.
+        ContentError: When a file in the content directory is invalid.
+    """
     settings = settings or get_settings()
     configure_logging(settings)
 
@@ -47,6 +65,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
     @asynccontextmanager
     async def lifespan(_app: FastAPI) -> AsyncIterator[None]:
+        """Log one startup line; there is no other state to open or close in this version."""
         logger.info(
             "Starting %s v%s (env=%s)",
             content.get(settings.default_locale).profile.name,

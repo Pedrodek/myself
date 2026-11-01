@@ -19,7 +19,12 @@ def dev(
         bool, typer.Option(help="Build the assets and rebuild them on change.")
     ] = True,
 ) -> None:
-    """Run the development server with auto-reload."""
+    """Run the development server with auto-reload.
+
+    Builds the assets first and, in a background thread, rebuilds them whenever a template,
+    stylesheet, script or image changes. uvicorn restarts the app when Python, YAML,
+    Markdown or translation files change.
+    """
     if build:
         assets.ensure_built()
         threading.Thread(target=assets.watch_forever, daemon=True, name="assets-watch").start()

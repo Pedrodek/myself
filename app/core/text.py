@@ -12,5 +12,6 @@ def slugify(value: str) -> str:
 
 
 def reading_minutes(text: str, words_per_minute: int = 200) -> int:
+    """Estimate reading time in whole minutes (rounded up, never less than one)."""
     words = len(re.findall(r"\w+", text))
     return max(1, -(-words // words_per_minute))

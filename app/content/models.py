@@ -23,6 +23,7 @@ def _parse_month(value: Any) -> Any:
 
 
 def _check_url(value: str) -> str:
+    """Allow only ``http(s)`` and ``mailto`` links (blocks ``javascript:`` and similar)."""
     parts = urlsplit(value)
     if parts.scheme in {"http", "https"} and parts.netloc:
         return value
@@ -38,16 +39,29 @@ OptionalMonthDate = Annotated[date | None, BeforeValidator(_parse_month)]
 
 
 class ContentModel(BaseModel):
+    """Base for every content model: immutable, trims strings and rejects unknown keys.
+
+    Rejecting unknown keys turns a typo in a YAML file (``hightlights:``) into a clear error
+    instead of silently dropping the data.
+    """
+
     model_config = ConfigDict(extra="forbid", frozen=True, str_strip_whitespace=True)
 
 
 class Link(ContentModel):
+    """A labelled external link (GitHub, LinkedIn...). ``icon`` names a template icon."""
+
     label: str
     url: SafeUrl
     icon: str | None = None
 
 
 class Profile(ContentModel):
+    """The person: ``content/<locale>/profile.yaml``.
+
+    ``sample: true`` marks fictional placeholder content; production refuses to start with it.
+    """
+
     sample: bool = False
     name: str
     headline: str
@@ -60,6 +74,11 @@ class Profile(ContentModel):
 
 
 class Experience(ContentModel):
+    """One job: an entry of ``experience.yaml``. ``end`` empty or ``present`` means current.
+
+    ``tech`` lists skill slugs defined in ``skills.yaml`` (checked when content is loaded).
+    """
+
     company: str
     role: str
     location: str | None = None
@@ -71,6 +90,8 @@ class Experience(ContentModel):
 
 
 class Skill(ContentModel):
+    """One skill: ``level`` is 1-5, ``years`` is optional, ``evidence`` lists project slugs."""
+
     slug: Slug
     name: str
     level: Annotated[int, Field(ge=1, le=5)]
@@ -80,11 +101,15 @@ class Skill(ContentModel):
 
 
 class SkillGroup(ContentModel):
+    """A category of skills (for example Backend) shown together."""
+
     category: str
     skills: tuple[Skill, ...]
 
 
 class Education(ContentModel):
+    """An entry of ``education.yaml``: a degree, course or certificate."""
+
     institution: str
     degree: str
     start: MonthDate
@@ -107,12 +132,20 @@ class ProjectMeta(ContentModel):
 
 
 class TocItem(ContentModel):
+    """One entry of a case study's table of contents (an h2 or h3 heading)."""
+
     level: int
     id: str
     text: str
 
 
 class Project(ProjectMeta):
+    """A case study: front matter plus the rendered body.
+
+    ``body_html`` is trusted output of :func:`app.content.markdown.render_markdown`, which
+    never passes raw HTML through, so templates may mark it safe.
+    """
+
     slug: Slug
     body_html: str
     toc: tuple[TocItem, ...] = ()

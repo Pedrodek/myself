@@ -11,16 +11,19 @@ from app.core.templating import Renderer
 
 
 def get_settings_dep(request: Request) -> Settings:
+    """Dependency: the application settings."""
     settings: Settings = request.app.state.settings
     return settings
 
 
 def get_renderer(request: Request) -> Renderer:
+    """Dependency: the template renderer."""
     renderer: Renderer = request.app.state.renderer
     return renderer
 
 
 def get_content(request: Request) -> LocaleContent:
+    """Dependency: the content in the language taken from the URL prefix."""
     content: LocaleContent = request.app.state.content.get(request.state.locale)
     return content
 

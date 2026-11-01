@@ -23,6 +23,7 @@ commands = typer.Typer(
 
 
 def _babel(*args: str) -> None:
+    """Run ``pybabel`` from the project root; a non-zero result becomes ``typer.Exit``."""
     with chdir(PROJECT_ROOT):
         code = CommandLineInterface().run(["pybabel", *args])  # type: ignore[no-untyped-call]
     if code:
@@ -30,6 +31,7 @@ def _babel(*args: str) -> None:
 
 
 def _po(locale: str) -> Path:
+    """Path of a locale's ``messages.po`` catalog."""
     return LOCALES_DIR / BABEL_LOCALES[locale] / "LC_MESSAGES" / "messages.po"
 
 

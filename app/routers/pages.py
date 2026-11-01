@@ -22,12 +22,14 @@ TextQuery = Annotated[str | None, Query(max_length=80)]
 
 @root.api_route("/", methods=["GET", "HEAD"])
 async def index(request: Request, settings: SettingsDep) -> RedirectResponse:
+    """Redirect ``/`` to the language the browser prefers (``Accept-Language``)."""
     locale = negotiate_locale(request.headers.get("accept-language"), settings.default_locale)
     return RedirectResponse(f"/{locale}/", status_code=302, headers={"Vary": "Accept-Language"})
 
 
 @page("/")
 async def home(request: Request, renderer: RendererDep, content: ContentDep) -> Response:
+    """Landing page: summary, top skills, featured projects and the latest job."""
     profile = content.profile
     top_skills = sorted(
         content.skills.values(),
@@ -49,6 +51,7 @@ async def home(request: Request, renderer: RendererDep, content: ContentDep) -> 
 async def experience(
     request: Request, renderer: RendererDep, content: ContentDep, tech: SlugQuery = None
 ) -> Response:
+    """Work history; ``?tech=<slug>`` filters it (works as a plain link without JavaScript)."""
     return renderer.render(
         request,
         "pages/experience.html",
@@ -69,6 +72,7 @@ async def projects(
     q: TextQuery = None,
     tag: TextQuery = None,
 ) -> Response:
+    """Project list; ``?q=`` searches text and ``?tag=`` filters by tag (no JavaScript needed)."""
     return renderer.render(
         request,
         "pages/projects.html",
@@ -86,6 +90,7 @@ async def projects(
 async def project_detail(
     slug: str, request: Request, renderer: RendererDep, content: ContentDep
 ) -> Response:
+    """One case study. Responds 404 when the slug is unknown."""
     project = content.project(slug)
     if project is None:
         raise HTTPException(status_code=404)
@@ -103,6 +108,7 @@ async def project_detail(
 
 @page("/skills")
 async def skills(request: Request, renderer: RendererDep, content: ContentDep) -> Response:
+    """Skills grouped by category."""
     return renderer.render(
         request,
         "pages/skills.html",
@@ -117,6 +123,7 @@ async def skills(request: Request, renderer: RendererDep, content: ContentDep) -
 async def resume(
     request: Request, renderer: RendererDep, content: ContentDep, settings: SettingsDep
 ) -> Response:
+    """Printable résumé; the PDF link appears only when the PDF has been generated."""
     pdf = settings.downloads_dir / f"resume.{request.state.locale}.pdf"
     return renderer.render(
         request,
@@ -130,6 +137,7 @@ async def resume(
 
 @page("/about-site")
 async def about_site(request: Request, renderer: RendererDep, content: ContentDep) -> Response:
+    """Explains how this site is built."""
     return renderer.render(
         request,
         "pages/about_site.html",

@@ -35,6 +35,20 @@ def error_response(
     detail: Any = None,
     headers: Mapping[str, str] | None = None,
 ) -> Response:
+    """Build the error response appropriate for the client.
+
+    API, health and CSP-report paths get a JSON ``{"detail": ...}`` body. Everything else gets
+    the localized HTML error page (a fragment for HTMX requests).
+
+    Args:
+        request: The failing request.
+        status_code: HTTP status to return.
+        detail: Optional detail for the JSON body; defaults to the status phrase.
+        headers: Extra response headers (for example ``Allow`` on a 405).
+
+    Returns:
+        The response to send.
+    """
     if request.url.path.startswith(JSON_PREFIXES):
         body = {"detail": detail if detail is not None else HTTPStatus(status_code).phrase}
         return JSONResponse(body, status_code=status_code, headers=dict(headers or {}))
@@ -61,12 +75,16 @@ def error_response(
 
 
 def install_error_handlers(app: FastAPI) -> None:
+    """Route HTTP and validation errors through :func:`error_response`."""
+
     @app.exception_handler(StarletteHTTPException)
     async def http_error(request: Request, exc: StarletteHTTPException) -> Response:
+        """Render HTTP errors (404, 405, ...) raised by routes or the router."""
         return error_response(request, exc.status_code, exc.detail, exc.headers)
 
     @app.exception_handler(RequestValidationError)
     async def validation_error(request: Request, exc: RequestValidationError) -> Response:
+        """Render request-validation failures as a 422."""
         return error_response(request, 422, jsonable_encoder(exc.errors()))
 
 
@@ -74,9 +92,14 @@ class UnhandledErrorMiddleware:
     """Turns unexpected exceptions into a logged 500 page that still gets the security headers."""
 
     def __init__(self, app: ASGIApp) -> None:
+        """Wrap the next ASGI application."""
         self.app = app
 
     async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
+        """Run the app; on an exception before the response started, send a 500 page.
+
+        If the response already started, headers are gone, so the exception is re-raised.
+        """
         if scope["type"] != "http":
             await self.app(scope, receive, send)
             return

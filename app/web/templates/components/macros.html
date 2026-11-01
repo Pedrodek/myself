@@ -1,4 +1,10 @@
-{# Reusable components. Use: {% from "components/macros.html" import icon, chip %} #}
+{#
+  Reusable components. Use: {% from "components/macros.html" import icon, project_card %}
+
+  Macros: icon, link_icon, nav_menu, lang_switch, level_meter, project_card, external_link.
+  Text in macros goes through _() so it follows the locale of the Jinja environment.
+#}
+{# Inline SVG icons (Feather style), keyed by name. The values are trusted constants, hence |safe below. #}
 {% set ICONS = {
   "sun": '<circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>',
   "moon": '<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>',
@@ -15,6 +21,7 @@
   "star": '<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>',
   "printer": '<polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/>'
 } %}
+{# icon(name, class): decorative SVG (aria-hidden); put an accessible label on the parent control. #}
 {% macro icon(name, class="icon") -%}
   <svg class="{{ class }}"
        viewBox="0 0 24 24"
@@ -28,9 +35,15 @@
     {{ ICONS[name]|safe }}
   </svg>
 {%- endmacro %}
+{# link_icon(link): icon for a profile link; unknown icon names fall back to "globe". #}
 {% macro link_icon(link) -%}
   {{ icon(link.icon if link.icon in ICONS else "globe") }}
 {%- endmacro %}
+{#
+  nav_menu(items, current, oob): main navigation. `current` is the key of the active section
+  (sets aria-current). With oob=True it is emitted as an out-of-band swap, so HTMX
+  navigation refreshes it without replacing the header.
+#}
 {% macro nav_menu(items, current, oob=False) -%}
   <nav id="site-nav"
        class="site-nav"
@@ -45,6 +58,10 @@
     </ul>
   </nav>
 {%- endmacro %}
+{#
+  lang_switch(alt_urls, oob): links to the same page in the other languages.
+  hx-boost="false" forces a full load so the <html lang> and the whole chrome are replaced.
+#}
 {% macro lang_switch(alt_urls, oob=False) -%}
   <div id="lang-switch"
        class="lang-switch"
@@ -63,6 +80,7 @@
     {% endfor %}
   </div>
 {%- endmacro %}
+{# level_meter(level): five dots for a 1-5 skill level, with a text alternative for screen readers. #}
 {% macro level_meter(level) -%}
   <span class="meter"
         role="img"
@@ -72,6 +90,7 @@
     {% endfor %}
   </span>
 {%- endmacro %}
+{# project_card(project): summary card that links to the case study. #}
 {% macro project_card(project) -%}
   <article class="card project-card">
     <h3 class="card-title"><a href="/{{ locale }}/projects/{{ project.slug }}">{{ project.title }}</a></h3>
@@ -83,6 +102,7 @@
     {% endif %}
   </article>
 {%- endmacro %}
+{# external_link(url, label, class): opens in a new tab, with noopener and a screen-reader hint. #}
 {% macro external_link(url, label, class="") -%}
   <a class="{{ class }}"
      href="{{ url }}"

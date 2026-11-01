@@ -22,6 +22,15 @@ def _(message: str) -> str:
 
 
 def load_translations(locale: str, locales_dir: Path = LOCALES_DIR) -> NullTranslations:
+    """Compile a locale's ``.po`` catalog in memory (no committed ``.mo`` files needed).
+
+    Args:
+        locale: Site locale code (``pt`` or ``en``).
+        locales_dir: Folder with ``<babel locale>/LC_MESSAGES/messages.po``.
+
+    Returns:
+        The translations, or an identity translation if the catalog does not exist.
+    """
     babel_locale = BABEL_LOCALES[locale]
     po_file = locales_dir / babel_locale / "LC_MESSAGES" / "messages.po"
     if not po_file.is_file():
@@ -58,6 +67,10 @@ def parse_accept_language(header: str | None) -> list[str]:
 
 
 def negotiate_locale(header: str | None, default: str) -> str:
+    """Pick the first supported site locale from an ``Accept-Language`` header.
+
+    Regional variants match their primary language (``pt-BR`` selects ``pt``).
+    """
     for language in parse_accept_language(header):
         primary = language.split("-")[0]
         if primary in LOCALES:
@@ -66,6 +79,10 @@ def negotiate_locale(header: str | None, default: str) -> str:
 
 
 def format_date_for(locale: str, value: date | None, pattern: str = "MMM yyyy") -> str:
+    """Format a date in the visitor's language (for example ``jul. de 2024`` or ``Jul 2024``).
+
+    Returns an empty string for ``None`` so templates can pass optional dates directly.
+    """
     if value is None:
         return ""
     return format_date(value, format=pattern, locale=BABEL_LOCALES[locale])

@@ -18,6 +18,7 @@ _QUIET_PREFIXES = ("/static/", "/healthz", "/readyz")
 
 
 def locale_from_path(path: str, default: str) -> str:
+    """Return the locale in the first path segment (``/en/...`` gives ``en``) or ``default``."""
     first = path.split("/", 2)[1] if path.startswith("/") else ""
     return first if first in LOCALES else default
 
@@ -26,10 +27,16 @@ class RequestContextMiddleware:
     """Assigns a request id, resolves the locale from the URL prefix and logs one access line."""
 
     def __init__(self, app: ASGIApp, default_locale: str) -> None:
+        """Wrap ``app``; ``default_locale`` is used for paths without a locale prefix."""
         self.app = app
         self.default_locale = default_locale
 
     async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
+        """Populate ``request.state`` (``request_id``, ``locale``), echo the id, log the access.
+
+        A client-supplied ``X-Request-ID`` is reused only if it looks safe (8-64 characters of
+        ``[A-Za-z0-9._-]``); otherwise a new id is generated, which prevents log injection.
+        """
         if scope["type"] not in {"http", "websocket"}:
             await self.app(scope, receive, send)
             return
@@ -68,17 +75,22 @@ class RequestContextMiddleware:
 
 
 class _BodyTooLargeError(Exception):
-    pass
+    """Internal signal raised while reading a body that exceeds the limit."""
 
 
 class BodySizeLimitMiddleware:
     """Rejects request bodies larger than ``max_bytes`` with 413."""
 
     def __init__(self, app: ASGIApp, max_bytes: int = 16 * 1024) -> None:
+        """Wrap ``app``; bodies above ``max_bytes`` are rejected."""
         self.app = app
         self.max_bytes = max_bytes
 
     async def __call__(self, scope: Scope, receive: Receive, send: Send) -> None:
+        """Check ``Content-Length`` up front and count streamed bytes for chunked bodies.
+
+        Bodyless methods (GET, HEAD, OPTIONS) pass through untouched.
+        """
         if scope["type"] != "http" or scope["method"] in {"GET", "HEAD", "OPTIONS"}:
             await self.app(scope, receive, send)
             return
@@ -115,6 +127,7 @@ class BodySizeLimitMiddleware:
 
     @staticmethod
     async def _reject(send: Send) -> None:
+        """Send a minimal JSON 413 response and close the connection."""
         body = b'{"detail":"Request body too large"}'
         await send(
             {

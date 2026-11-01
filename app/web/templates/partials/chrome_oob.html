@@ -1,3 +1,4 @@
+{# Chrome (menu and language switch) re-sent with every HTMX navigation as out-of-band swaps. #}
 {% from "components/macros.html" import nav_menu, lang_switch %}
 {{ nav_menu(nav, current, oob=True) }}
 {{ lang_switch(alt_urls, oob=True) }}

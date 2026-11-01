@@ -53,6 +53,18 @@ def running_site(settings: Settings) -> Iterator[str]:
 
 
 def export_pdfs(settings: Settings, out_dir: Path) -> list[Path]:
+    """Print each locale's ``/<locale>/resume`` page to an A4 PDF using the print stylesheet.
+
+    Starts the site on a temporary local port and drives headless Chromium through Playwright
+    (a dev-only dependency).
+
+    Args:
+        settings: Settings used to build the temporary app.
+        out_dir: Destination folder; created if needed.
+
+    Returns:
+        The PDF files that were written.
+    """
     from playwright.sync_api import sync_playwright
 
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -75,6 +87,7 @@ def export_pdfs(settings: Settings, out_dir: Path) -> list[Path]:
 
 
 def og_markup(name: str, headline: str) -> str:
+    """Return the HTML screenshotted as the Open Graph image (text is HTML-escaped)."""
     return (
         "<!doctype html><meta charset='utf-8'><style>"
         "*{box-sizing:border-box}body{margin:0;width:1200px;height:630px;display:flex;"
@@ -90,6 +103,11 @@ def og_markup(name: str, headline: str) -> str:
 
 
 def export_og(settings: Settings, out_dir: Path) -> Path:
+    """Render the 1200x630 social preview image (``og.png``) with the default-locale profile.
+
+    Returns:
+        The path of the written PNG.
+    """
     from playwright.sync_api import sync_playwright
 
     from app.content import load_content
@@ -114,6 +132,7 @@ OutOption = Annotated[
 
 
 def _shown(path: Path) -> str:
+    """Show a path relative to the project when possible, to keep console output short."""
     try:
         return path.relative_to(PROJECT_ROOT).as_posix()
     except ValueError:

@@ -16,6 +16,11 @@ _FORMATTER = HtmlFormatter(nowrap=True)
 
 
 def _highlight(code: str, lang: str, _attrs: str) -> str:
+    """Highlight a fenced code block with Pygments.
+
+    The language name comes from the Markdown author, so it is checked against a strict
+    pattern before it is used in a CSS class; unknown languages fall back to plain text.
+    """
     safe_lang = lang if _LANG.match(lang or "") else ""
     try:
         lexer = get_lexer_by_name(safe_lang) if safe_lang else TextLexer()
@@ -32,7 +37,14 @@ _MARKDOWN = MarkdownIt("commonmark", {"html": False, "highlight": _highlight}).e
 
 
 def render_markdown(text: str) -> tuple[str, tuple[TocItem, ...]]:
-    """Render Markdown to HTML and collect the h2/h3 outline."""
+    """Render Markdown to HTML and collect the h2/h3 outline.
+
+    Raw HTML in the source is escaped (never passed through). Headings get unique ``id``
+    anchors; repeated headings receive ``-2``, ``-3``... suffixes.
+
+    Returns:
+        The HTML and the table of contents.
+    """
     tokens = _MARKDOWN.parse(text)
     toc: list[TocItem] = []
     used: set[str] = set()

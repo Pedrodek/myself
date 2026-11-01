@@ -1,4 +1,4 @@
-"""Content tasks."""
+"""Content tasks: validate the YAML/Markdown files before they reach the server."""
 
 from typing import Annotated
 
