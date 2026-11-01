@@ -24,7 +24,15 @@ def _fresh_settings() -> Any:
     get_settings.cache_clear()
 
 
-def test_content_validate_reports_sample_content() -> None:
+def test_content_validate_accepts_the_real_content() -> None:
+    result = runner.invoke(cli, ["content", "validate", "--strict"])
+    assert result.exit_code == 0, result.output
+
+
+def test_content_validate_reports_sample_content(monkeypatch: pytest.MonkeyPatch) -> None:
+    from tests.conftest import SAMPLE_CONTENT
+
+    monkeypatch.setenv("HUB_CONTENT_DIR", str(SAMPLE_CONTENT))
     result = runner.invoke(cli, ["content", "validate"])
     assert result.exit_code == 0, result.output
     assert "content is valid" in result.output and "sample" in result.output

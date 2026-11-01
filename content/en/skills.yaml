@@ -1,22 +1,31 @@
+- category: Languages
+  skills:
+    - {slug: java, name: Java, level: 4, tags: [language, back-end]}
+    - {slug: python, name: Python, level: 4, tags: [language], evidence: [hub-curriculo]}
+    - {slug: javascript, name: JavaScript, level: 3, tags: [language, front-end]}
+    - {slug: typescript, name: TypeScript, level: 3, tags: [language, front-end]}
+    - {slug: kotlin, name: Kotlin, level: 2, tags: [language, mobile], evidence: [zinfinity-mobile]}
 - category: Backend
   skills:
-    - {slug: python, name: Python, level: 5, years: 8, tags: [language], evidence: [hub-curriculo, api-pedidos, pipeline-dados, cli-automacao]}
-    - {slug: fastapi, name: FastAPI, level: 5, years: 4, tags: [api, async], evidence: [hub-curriculo, api-pedidos]}
-    - {slug: asyncio, name: asyncio, level: 4, years: 3, tags: [async], evidence: [api-pedidos]}
-    - {slug: sqlalchemy, name: SQLAlchemy, level: 4, years: 4, tags: [orm], evidence: [api-pedidos]}
-    - {slug: pydantic, name: Pydantic, level: 5, years: 4, tags: [validation], evidence: [hub-curriculo]}
+    - {slug: spring-boot, name: Spring Boot, level: 3, tags: [api, java]}
+    - {slug: kafka, name: Apache Kafka, level: 3, tags: [messaging]}
+    - {slug: fastapi, name: FastAPI, level: 3, tags: [api, async], evidence: [hub-curriculo]}
+    - {slug: pydantic, name: Pydantic, level: 3, tags: [validation], evidence: [hub-curriculo]}
 - category: Front-end
   skills:
-    - {slug: htmx, name: HTMX, level: 4, years: 2, tags: [html-over-the-wire], evidence: [hub-curriculo]}
-    - {slug: tailwind, name: Tailwind CSS, level: 3, years: 2, tags: [css], evidence: [hub-curriculo]}
-    - {slug: javascript, name: JavaScript, level: 3, years: 5, tags: [browser]}
+    - {slug: angular, name: Angular, level: 2, tags: [framework]}
+    - {slug: bootstrap, name: Bootstrap, level: 4, tags: [css], evidence: [nexus]}
+    - {slug: htmx, name: HTMX, level: 2, tags: [html-over-the-wire], evidence: [hub-curriculo]}
+    - {slug: tailwind, name: Tailwind CSS, level: 2, tags: [css], evidence: [hub-curriculo]}
 - category: Data
   skills:
-    - {slug: postgres, name: PostgreSQL, level: 4, years: 5, tags: [sql], evidence: [api-pedidos, pipeline-dados]}
-    - {slug: pandas, name: pandas, level: 4, years: 4, tags: [analysis], evidence: [pipeline-dados]}
+    - {slug: postgres, name: PostgreSQL, level: 3, tags: [sql]}
+    - {slug: sql-server, name: SQL Server, level: 3, tags: [sql]}
+    - {slug: mongodb, name: MongoDB, level: 3, tags: [nosql]}
 - category: Quality and delivery
   skills:
-    - {slug: pytest, name: pytest, level: 5, years: 5, tags: [testing], evidence: [hub-curriculo, api-pedidos, cli-automacao]}
-    - {slug: docker, name: Docker, level: 4, years: 4, tags: [containers], evidence: [hub-curriculo, api-pedidos, pipeline-dados]}
-    - {slug: github-actions, name: GitHub Actions, level: 4, years: 3, tags: [ci-cd], evidence: [hub-curriculo, pipeline-dados]}
-    - {slug: git, name: Git, level: 5, years: 8, tags: [version-control]}
+    - {slug: git, name: Git, level: 4, tags: [version-control]}
+    - {slug: docker, name: Docker, level: 3, tags: [containers], evidence: [hub-curriculo]}
+    - {slug: gitlab-ci, name: GitLab CI/CD, level: 3, tags: [ci-cd]}
+    - {slug: github-actions, name: GitHub Actions, level: 3, tags: [ci-cd], evidence: [hub-curriculo]}
+    - {slug: pytest, name: pytest, level: 3, tags: [testing], evidence: [hub-curriculo]}

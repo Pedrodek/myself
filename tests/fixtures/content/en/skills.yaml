@@ -1,0 +1,22 @@
+- category: Backend
+  skills:
+    - {slug: python, name: Python, level: 5, years: 8, tags: [language], evidence: [hub-curriculo, api-pedidos, pipeline-dados, cli-automacao]}
+    - {slug: fastapi, name: FastAPI, level: 5, years: 4, tags: [api, async], evidence: [hub-curriculo, api-pedidos]}
+    - {slug: asyncio, name: asyncio, level: 4, years: 3, tags: [async], evidence: [api-pedidos]}
+    - {slug: sqlalchemy, name: SQLAlchemy, level: 4, years: 4, tags: [orm], evidence: [api-pedidos]}
+    - {slug: pydantic, name: Pydantic, level: 5, years: 4, tags: [validation], evidence: [hub-curriculo]}
+- category: Front-end
+  skills:
+    - {slug: htmx, name: HTMX, level: 4, years: 2, tags: [html-over-the-wire], evidence: [hub-curriculo]}
+    - {slug: tailwind, name: Tailwind CSS, level: 3, years: 2, tags: [css], evidence: [hub-curriculo]}
+    - {slug: javascript, name: JavaScript, level: 3, years: 5, tags: [browser]}
+- category: Data
+  skills:
+    - {slug: postgres, name: PostgreSQL, level: 4, years: 5, tags: [sql], evidence: [api-pedidos, pipeline-dados]}
+    - {slug: pandas, name: pandas, level: 4, years: 4, tags: [analysis], evidence: [pipeline-dados]}
+- category: Quality and delivery
+  skills:
+    - {slug: pytest, name: pytest, level: 5, years: 5, tags: [testing], evidence: [hub-curriculo, api-pedidos, cli-automacao]}
+    - {slug: docker, name: Docker, level: 4, years: 4, tags: [containers], evidence: [hub-curriculo, api-pedidos, pipeline-dados]}
+    - {slug: github-actions, name: GitHub Actions, level: 4, years: 3, tags: [ci-cd], evidence: [hub-curriculo, pipeline-dados]}
+    - {slug: git, name: Git, level: 5, years: 8, tags: [version-control]}

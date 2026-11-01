@@ -1,18 +1,18 @@
-sample: true
-name: Your Name
-headline: Python developer · Backend and data
+sample: false
+name: Pedro Leonardo Laurentino Alves
+headline: Back-End Developer · Java and Python · Systems Analysis student
 summary: |
-  Sample text: introduce yourself in two or three sentences. Say what kind of problems you solve, which technologies you are strongest in and what you are looking for in the next few years.
+  Systems Analysis and Development student at Universidade Metodista de São Paulo, with internship experience in back-end development: Java REST APIs with Spring, Kafka messaging, SQL and NoSQL databases, CI/CD and Docker.
 
-  Everything in this folder is fictional and must be replaced with your own data.
-location: São Paulo, Brazil
-email: contato@example.com
-availability: Open to new opportunities
-github_user: octocat
+  I have worked on integrations, service refactoring and persistence migration, and I learn fast, stay curious and care about quality delivery. I am looking for an internship or Junior role to grow as a developer, working with Java or Python.
+location: São Bernardo do Campo, São Paulo, Brazil
+email: pedro.leonardo.main@gmail.com
+availability: Looking for an internship or Junior role (Back-End, Java or Python)
+github_user: Pedrodek
 links:
   - label: GitHub
-    url: https://github.com/octocat
+    url: https://github.com/Pedrodek
     icon: github
   - label: LinkedIn
-    url: https://www.linkedin.com/in/your-username
+    url: https://www.linkedin.com/in/pedro-leonardo-laurentino-alves-a4a35b243/
     icon: linkedin

@@ -1,0 +1,30 @@
+- company: Example Company A
+  role: Senior Software Engineer
+  location: Remote
+  start: 2023-02
+  end: present
+  summary: Owner of the orders platform, from API design to running it in production.
+  highlights:
+    - Cut the API p95 response time from 480 ms to 130 ms with caching and async queries.
+    - Built the test suite (from 40% to 88% coverage) and the continuous delivery pipeline.
+    - Mentored three junior developers.
+  tech: [python, fastapi, postgres, docker, pytest]
+- company: Example Company B
+  role: Mid-level Python Developer
+  location: São Paulo, Brazil
+  start: 2020-03
+  end: 2023-01
+  summary: Data pipelines and internal reporting services.
+  highlights:
+    - Moved 12 spreadsheet routines to versioned pipelines, saving about 30 hours a month.
+    - Created the internal data validation library used by 5 teams.
+  tech: [python, sqlalchemy, pandas, github-actions, git]
+- company: Example Startup C
+  role: Junior Developer
+  location: Remote
+  start: 2018-06
+  end: 2020-02
+  summary: "First job: web applications and automation."
+  highlights:
+    - Shipped the admin dashboard that replaced the manual support process.
+  tech: [python, javascript, git]

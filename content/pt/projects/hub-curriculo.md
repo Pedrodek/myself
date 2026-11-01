@@ -1,7 +1,7 @@
 ---
 title: Hub-currículo interativo
 summary: Este próprio site, um currículo em que cada seção demonstra uma habilidade com Python.
-repo: octocat/Hello-World
+repo: Pedrodek/myself
 skills: [python, fastapi, pydantic, htmx, tailwind, pytest, docker, github-actions]
 tags: [web, testing, devops]
 featured: true

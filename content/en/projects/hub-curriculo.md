@@ -1,7 +1,7 @@
 ---
 title: Interactive resume hub
 summary: This very site, a résumé where every section demonstrates a Python skill.
-repo: octocat/Hello-World
+repo: Pedrodek/myself
 skills: [python, fastapi, pydantic, htmx, tailwind, pytest, docker, github-actions]
 tags: [web, testing, devops]
 featured: true

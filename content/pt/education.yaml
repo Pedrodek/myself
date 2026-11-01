@@ -1,9 +1,17 @@
-- institution: Universidade Exemplo
-  degree: Bacharelado em Ciência da Computação
-  start: 2014-02
-  end: 2018-12
-- institution: Plataforma Exemplo de Cursos
-  degree: Certificação em Engenharia de Dados
-  start: 2021-03
-  end: 2021-09
-  notes: Curso de 120 horas com projeto final.
+- institution: Universidade Metodista de São Paulo
+  degree: Tecnólogo em Análise e Desenvolvimento de Sistemas
+  start: 2025-02
+  end: 2027-07
+- institution: Senac São Paulo
+  degree: Ensino médio técnico, Técnico em Informática
+  start: 2022-01
+  end: 2024-12
+  notes: "Projetos: aplicação em Java, aplicação em Kotlin e site com a API do ChatGPT integrada."
+- institution: Alura
+  degree: "Certificado: PostgreSQL"
+  start: 2024-06
+  end: 2024-06
+- institution: Alura
+  degree: "Certificado: Java, aplicando a Orientação a Objetos"
+  start: 2024-04
+  end: 2024-04

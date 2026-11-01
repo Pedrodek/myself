@@ -1,18 +1,18 @@
-sample: true
-name: Seu Nome
-headline: Pessoa desenvolvedora Python · Backend e dados
+sample: false
+name: Pedro Leonardo Laurentino Alves
+headline: Desenvolvedor Back-End · Java e Python · Estudante de ADS
 summary: |
-  Texto de exemplo: apresente-se em duas ou três frases. Diga que tipo de problema você resolve, em quais tecnologias é mais forte e o que procura nos próximos anos.
+  Estudante de Análise e Desenvolvimento de Sistemas na Universidade Metodista de São Paulo, com experiência de estágio em desenvolvimento back-end: APIs REST em Java com Spring, mensageria com Kafka, bancos SQL e NoSQL, CI/CD e Docker.
 
-  Todo o conteúdo desta pasta é fictício e deve ser substituído pelos seus dados.
-location: São Paulo, Brasil
-email: contato@example.com
-availability: Aberto(a) a novas oportunidades
-github_user: octocat
+  Já atuei em integrações, refatoração de serviços e migração de persistência, e gosto de aprender rápido, ser curioso e entregar com qualidade. Procuro uma vaga de estágio ou Júnior para crescer como desenvolvedor, com Java ou Python.
+location: São Bernardo do Campo, São Paulo, Brasil
+email: pedro.leonardo.main@gmail.com
+availability: Em busca de estágio ou vaga Júnior (Back-End, Java ou Python)
+github_user: Pedrodek
 links:
   - label: GitHub
-    url: https://github.com/octocat
+    url: https://github.com/Pedrodek
     icon: github
   - label: LinkedIn
-    url: https://www.linkedin.com/in/seu-usuario
+    url: https://www.linkedin.com/in/pedro-leonardo-laurentino-alves-a4a35b243/
     icon: linkedin

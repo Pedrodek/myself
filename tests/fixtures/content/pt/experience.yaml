@@ -1,0 +1,30 @@
+- company: Empresa Exemplo A
+  role: Engenheiro(a) de Software Sênior
+  location: Remoto
+  start: 2023-02
+  end: present
+  summary: Responsável pela plataforma de pedidos, do desenho da API à operação em produção.
+  highlights:
+    - Reduzi o tempo de resposta p95 da API de 480 ms para 130 ms com cache e consultas assíncronas.
+    - Estruturei a suíte de testes (de 40% para 88% de cobertura) e o pipeline de entrega contínua.
+    - Mentoria de três pessoas desenvolvedoras juniores.
+  tech: [python, fastapi, postgres, docker, pytest]
+- company: Empresa Exemplo B
+  role: Desenvolvedor(a) Python Pleno
+  location: São Paulo, Brasil
+  start: 2020-03
+  end: 2023-01
+  summary: Pipelines de dados e serviços internos de relatórios.
+  highlights:
+    - Migrei 12 rotinas em planilhas para pipelines versionados, economizando cerca de 30 horas por mês.
+    - Criei a biblioteca interna de validação de dados usada por 5 equipes.
+  tech: [python, sqlalchemy, pandas, github-actions, git]
+- company: Startup Exemplo C
+  role: Desenvolvedor(a) Júnior
+  location: Remoto
+  start: 2018-06
+  end: 2020-02
+  summary: "Primeiro emprego: aplicações web e automações."
+  highlights:
+    - Entreguei o painel administrativo que substituiu o processo manual de suporte.
+  tech: [python, javascript, git]

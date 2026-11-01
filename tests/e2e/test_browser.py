@@ -7,13 +7,14 @@ import socket
 import threading
 import time
 from collections.abc import Iterator
+from pathlib import Path
 from typing import Any
 
 import pytest
 import uvicorn
 from playwright.sync_api import Page, expect
 
-from app.core.config import PROJECT_ROOT, Settings
+from app.core.config import Settings
 from app.main import create_app
 
 pytestmark = pytest.mark.e2e
@@ -38,7 +39,7 @@ def live_url(tmp_path_factory: pytest.TempPathFactory) -> Iterator[str]:
     settings = Settings(
         _env_file=None,  # type: ignore[call-arg]
         env="test",
-        content_dir=PROJECT_ROOT / "content",
+        content_dir=Path(__file__).parents[1] / "fixtures" / "content",
         data_dir=root / "data",
         downloads_dir=root / "downloads",
         site_url=f"http://127.0.0.1:{port}",

@@ -1,30 +1,24 @@
-- company: Example Company A
-  role: Senior Software Engineer
-  location: Remote
-  start: 2023-02
-  end: present
-  summary: Owner of the orders platform, from API design to running it in production.
-  highlights:
-    - Cut the API p95 response time from 480 ms to 130 ms with caching and async queries.
-    - Built the test suite (from 40% to 88% coverage) and the continuous delivery pipeline.
-    - Mentored three junior developers.
-  tech: [python, fastapi, postgres, docker, pytest]
-- company: Example Company B
-  role: Mid-level Python Developer
+- company: Grupo DPSP
+  role: IT Intern
   location: São Paulo, Brazil
-  start: 2020-03
-  end: 2023-01
-  summary: Data pipelines and internal reporting services.
+  start: 2025-08
+  end: 2026-08
+  summary: Development, maintenance and evolution of Java integration services.
   highlights:
-    - Moved 12 spreadsheet routines to versioned pipelines, saving about 30 hours a month.
-    - Created the internal data validation library used by 5 teams.
-  tech: [python, sqlalchemy, pandas, github-actions, git]
-- company: Example Startup C
-  role: Junior Developer
-  location: Remote
-  start: 2018-06
-  end: 2020-02
-  summary: "First job: web applications and automation."
+    - Refactored 3 Java APIs with Spring, including message consumption and processing with Kafka.
+    - Migrated a service's persistence from two SQL Server tables to a single MongoDB collection, using a Java REST API with Hexagonal Architecture, making the data better suited for the Data team.
+    - Built and ran CI/CD pipelines on GitLab.
+    - Identified and fixed security vulnerabilities in applications.
+    - Used Docker, Docker Compose and Dockerfiles to create and run development environments.
+  tech: [java, spring-boot, kafka, mongodb, sql-server, docker, gitlab-ci, git]
+- company: Grupo SAS Saúde
+  role: Intern
+  location: São Bernardo do Campo, Brazil (remote)
+  start: 2024-07
+  end: 2024-12
+  summary: "Development on an internal application: bug fixes, improvements and new features."
   highlights:
-    - Shipped the admin dashboard that replaced the manual support process.
-  tech: [python, javascript, git]
+    - Fixed bugs and improved the system to make the experience smoother and more efficient.
+    - Contributed new features during busy periods.
+    - Gave technical support to colleagues, identifying and solving the reported problems.
+  tech: [javascript, typescript, angular, bootstrap, postgres, git]
