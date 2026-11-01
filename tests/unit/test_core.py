@@ -49,6 +49,14 @@ class TestSettings:
         with pytest.raises(ValidationError):
             make_settings(notify_webhook_url="ftp://x")
 
+    def test_render_external_url_is_the_default_and_hub_setting_wins(
+        self, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        monkeypatch.setenv("RENDER_EXTERNAL_URL", "https://myself.onrender.com")
+        assert make_settings().site_url == "https://myself.onrender.com"
+        monkeypatch.setenv("HUB_SITE_URL", "https://custom.example")
+        assert make_settings().site_url == "https://custom.example"
+
     def test_environment_variables_use_the_hub_prefix(
         self, monkeypatch: pytest.MonkeyPatch
     ) -> None:

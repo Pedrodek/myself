@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: myself
+    runtime: docker
+    plan: free
+    autoDeploy: false
+    healthCheckPath: /healthz
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: HUB_ENV
+        value: prod
+      - key: HUB_SECRET_KEY
+        generateValue: true
+      - key: HUB_ALLOW_SAMPLE_CONTENT
+        value: "true"
+      - key: HUB_DATA_DIR
+        value: /data

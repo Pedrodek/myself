@@ -1,11 +1,12 @@
 """Application settings (12-factor). Every variable uses the ``HUB_`` prefix."""
 
+import os
 from functools import lru_cache
 from pathlib import Path
 from typing import Any, Literal
 from urllib.parse import urlsplit
 
-from pydantic import SecretStr, field_validator, model_validator
+from pydantic import Field, SecretStr, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 LOCALES: tuple[str, ...] = ("pt", "en")
@@ -21,7 +22,9 @@ class Settings(BaseSettings):
 
     env: Literal["dev", "test", "prod"] = "dev"
     secret_key: SecretStr = SecretStr(DEV_SECRET)
-    site_url: str = "http://127.0.0.1:8000"
+    site_url: str = Field(
+        default_factory=lambda: os.getenv("RENDER_EXTERNAL_URL", "http://127.0.0.1:8000")
+    )
     database_url: str | None = None
     content_dir: Path = PROJECT_ROOT / "content"
     data_dir: Path = PROJECT_ROOT / "data"
