@@ -20,6 +20,7 @@ Site-currículo bilíngue (pt-BR e en), renderizado no servidor com **FastAPI + 
 - [Estrutura do repositório](#estrutura-do-repositório)
 - [Segurança](#segurança)
 - [Roadmap](#roadmap)
+- [Contribuindo e documentação do código](CONTRIBUTING.md)
 
 ## Início rápido
 
@@ -196,7 +197,7 @@ Confira por linha de comando: `curl http://127.0.0.1:8000/healthz` deve responde
 
 ### 6. Coloque o seu conteúdo
 
-Hoje todo o texto é **fictício** (há uma faixa amarela no topo avisando). Veja [Colocando o seu conteúdo](#colocando-o-seu-conteúdo).
+O conteúdo já traz o perfil real do autor. Para trocar pelo **seu**, veja [Colocando o seu conteúdo](#colocando-o-seu-conteúdo).
 
 ### 7. (Opcional) Gere o PDF e a imagem de compartilhamento
 
@@ -223,7 +224,7 @@ python -c "import secrets; print(secrets.token_urlsafe(48))"
 
 ## Colocando o seu conteúdo
 
-Todo o texto está em `content/` e hoje é **fictício** (`sample: true`). Edite:
+Todo o texto está em `content/` (perfil, experiência, habilidades, formação e projetos). Se você clonou o projeto para criar o **seu** currículo, troque os dados do autor pelos seus e marque `sample: true` no `profile.yaml` enquanto o texto for provisório: o site exibe uma faixa de aviso e o modo de produção se recusa a subir com ele. Edite:
 
 | Arquivo | O que é |
 |---|---|
@@ -233,7 +234,7 @@ Todo o texto está em `content/` e hoje é **fictício** (`sample: true`). Edite
 | `content/<pt\|en>/education.yaml` | Formação |
 | `content/<pt\|en>/projects/<slug>.md` | Estudos de caso (front matter YAML + Markdown) |
 
-Cada arquivo existe nos **dois** idiomas. Depois de editar, valide (referências cruzadas, datas, URLs e **paridade pt/en**) e remova `sample: true` do `profile.yaml` de ambos:
+Cada arquivo existe nos **dois** idiomas. Depois de editar, valide (referências cruzadas, datas, URLs e **paridade pt/en**):
 
 ```powershell
 python -m app content validate            # lista todos os problemas de uma vez
@@ -322,9 +323,11 @@ app/
     templates/       base, fragmento, páginas, componentes, erros
     static/          css/, js/, img/ (e vendor/, dist/ gerados)
 content/             conteúdo do currículo (pt/ e en/) e, no futuro, demos/
-tests/               unit/, integration/ e e2e/
+tests/               unit/, integration/ e e2e/; fixtures/content/ é o conteúdo fictício dos testes
 assets.lock.json     versões e SHA-384 dos assets vendorizados
 PLANO_DE_IMPLEMENTACAO.md   decisões, fases e riscos
+CONTRIBUTING.md      política de documentação, mapa do código e como estender o projeto
+CHANGELOG.md         histórico de mudanças
 ```
 
 ## Segurança

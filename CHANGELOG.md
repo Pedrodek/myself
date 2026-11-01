@@ -4,6 +4,21 @@ All notable changes to this project are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the project uses
 [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Added
+- `CONTRIBUTING.md`: code-documentation policy, a map of the code base and how to extend it.
+- Docstrings (Google style) on every public module, class, function and method under `app/`,
+  enforced by ruff's `D` rules in pre-commit and CI.
+- Comments documenting the Jinja macros and the CSP-driven choices in the base templates.
+
+### Changed
+- The résumé content now comes from the author's real profile (LinkedIn) instead of sample data;
+  the fictional content moved to `tests/fixtures/content/` and is used only by the tests.
+
+### Fixed
+- Accents corrupted in the `hub-curriculo.md` case studies; all Markdown files are UTF-8 without BOM.
+
 ## [0.1.0] - 2026-10-31
 
 First release of the hub: phases F0-F3 of `PLANO_DE_IMPLEMENTACAO.md`.
