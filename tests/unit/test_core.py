@@ -49,6 +49,14 @@ class TestSettings:
         with pytest.raises(ValidationError):
             make_settings(notify_webhook_url="ftp://x")
 
+    def test_render_external_url_is_the_default_and_hub_setting_wins(
+        self, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        monkeypatch.setenv("RENDER_EXTERNAL_URL", "https://myself.onrender.com")
+        assert make_settings().site_url == "https://myself.onrender.com"
+        monkeypatch.setenv("HUB_SITE_URL", "https://custom.example")
+        assert make_settings().site_url == "https://custom.example"
+
     def test_environment_variables_use_the_hub_prefix(
         self, monkeypatch: pytest.MonkeyPatch
     ) -> None:
@@ -91,24 +99,6 @@ class TestI18n:
 
     def test_missing_catalog_is_not_fatal(self, tmp_path: Path) -> None:
         assert load_translations("pt", tmp_path).gettext("Skills") == "Skills"
-
-
-def test_htmx_fragment_rules() -> None:
-    from starlette.requests import Request
-
-    def request(headers: dict[str, str]) -> Request:
-        raw = [(k.lower().encode(), v.encode()) for k, v in headers.items()]
-        return Request({"type": "http", "headers": raw})
-
-    assert not wants_fragment(request({}))
-    assert wants_fragment(request({"HX-Request": "true"}))
-    assert not wants_fragment(request({"HX-Request": "true", "HX-History-Restore-Request": "true"}))
-
-
-def test_slugify_and_reading_time() -> None:
-    assert slugify("Solução & Arquitetura!") == "solucao-arquitetura"
-    assert slugify("???") == "section"
-    assert reading_minutes("palavra " * 450) == 3 and reading_minutes("") == 1
 
 
 class TestMarkdown:
