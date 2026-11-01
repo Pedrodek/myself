@@ -1,0 +1,470 @@
+@import "tailwindcss" source(none);
+@import "./_pygments.css";
+@plugin "@tailwindcss/typography";
+@source "../../templates";
+@source "../js";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+    "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+}
+
+/* Semantic colors: the values below switch with the .dark class on <html>. */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-brand: var(--brand);
+  --color-brand-fg: var(--brand-fg);
+  --color-brand-soft: var(--brand-soft);
+}
+
+:root {
+  --bg: #ffffff;
+  --fg: #0f172a;
+  --muted: #475569;
+  --line: #e2e8f0;
+  --surface: #ffffff;
+  --surface-2: #f1f5f9;
+  --brand: #4338ca;
+  --brand-fg: #ffffff;
+  --brand-soft: #e0e7ff;
+  color-scheme: light;
+}
+
+html.dark {
+  --bg: #020617;
+  --fg: #e2e8f0;
+  --muted: #94a3b8;
+  --line: #1e293b;
+  --surface: #0f172a;
+  --surface-2: #111c33;
+  --brand: #a5b4fc;
+  --brand-fg: #0f172a;
+  --brand-soft: #1e1b4b;
+  color-scheme: dark;
+}
+
+@utility wrap {
+  @apply mx-auto w-full max-w-5xl px-4 sm:px-6;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply flex min-h-screen flex-col bg-bg font-sans text-fg antialiased;
+    line-height: 1.6;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-semibold tracking-tight;
+  }
+  a {
+    @apply text-brand underline-offset-4;
+  }
+  a:hover {
+    @apply underline;
+  }
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-brand;
+  }
+  code {
+    @apply font-mono text-[0.9em];
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    ::before,
+    ::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  .skip-link {
+    @apply absolute top-2 left-4 z-50 -translate-y-20 rounded-md bg-brand px-3 py-2 text-brand-fg no-underline focus:translate-y-0;
+  }
+  .sample-banner {
+    @apply bg-amber-100 px-4 py-2 text-center text-sm text-amber-950;
+  }
+
+  /* Header */
+  .site-header {
+    @apply sticky top-0 z-40 border-b border-line bg-bg/85 backdrop-blur;
+  }
+  .header-row {
+    @apply wrap flex flex-wrap items-center gap-x-3 gap-y-1 py-3;
+  }
+  .brand {
+    @apply mr-auto text-lg font-semibold text-fg no-underline hover:no-underline;
+  }
+  .site-nav {
+    @apply order-last hidden w-full md:order-none md:block md:w-auto;
+  }
+  .site-nav.is-open {
+    @apply block;
+  }
+  .site-nav ul {
+    @apply flex flex-col gap-1 md:flex-row md:flex-wrap md:items-center;
+  }
+  .site-nav a {
+    @apply block rounded-md px-3 py-2 text-sm font-medium text-muted no-underline hover:bg-surface-2 hover:text-fg hover:no-underline;
+  }
+  .site-nav a[aria-current="page"] {
+    @apply bg-surface-2 text-fg;
+  }
+  .header-tools {
+    @apply flex items-center gap-2;
+  }
+  .lang-switch {
+    @apply flex items-center gap-1 text-sm font-medium;
+  }
+  .lang-switch a,
+  .lang-current {
+    @apply rounded-md px-2 py-1;
+  }
+  .lang-switch a {
+    @apply text-muted no-underline hover:bg-surface-2 hover:text-fg hover:no-underline;
+  }
+  .lang-current {
+    @apply bg-brand-soft text-brand;
+  }
+  .icon-btn {
+    @apply inline-flex size-9 items-center justify-center rounded-md border border-line bg-surface text-fg hover:bg-surface-2;
+  }
+  .icon {
+    @apply size-[1.1em] shrink-0;
+  }
+  .theme-icon-dark {
+    display: none;
+  }
+  html.dark .theme-icon-dark {
+    display: inline-flex;
+  }
+  html.dark .theme-icon-light {
+    display: none;
+  }
+
+  /* Page structure */
+  .main {
+    @apply flex-1 py-10;
+  }
+  .main:focus {
+    outline: none;
+  }
+  .page-header {
+    @apply mb-8 space-y-2;
+  }
+  .page-title {
+    @apply text-3xl sm:text-4xl;
+  }
+  .lead {
+    @apply max-w-2xl text-lg text-muted;
+  }
+  .muted {
+    @apply text-muted;
+  }
+  .eyebrow {
+    @apply text-sm font-medium tracking-wide text-muted uppercase;
+  }
+  .section {
+    @apply mt-14 space-y-5;
+  }
+  .section-head {
+    @apply flex flex-wrap items-baseline justify-between gap-2;
+  }
+  .section-title {
+    @apply text-xl sm:text-2xl;
+  }
+  .empty {
+    @apply rounded-lg border border-dashed border-line p-6 text-center text-muted;
+  }
+  .error-page {
+    @apply space-y-4 py-10;
+  }
+  .breadcrumb {
+    @apply mb-6 flex items-center gap-2 text-sm text-muted;
+  }
+  .breadcrumb a {
+    @apply text-muted;
+  }
+
+  /* Hero */
+  .hero {
+    @apply space-y-4 py-6 sm:py-12;
+  }
+  .hero-title {
+    @apply text-4xl sm:text-6xl;
+  }
+  .hero-headline {
+    @apply text-xl font-medium text-brand sm:text-2xl;
+  }
+  .hero-summary {
+    @apply max-w-2xl text-lg whitespace-pre-line text-muted;
+  }
+  .actions {
+    @apply flex flex-wrap gap-3 pt-2;
+  }
+
+  /* Buttons and chips */
+  .btn {
+    @apply inline-flex items-center gap-2 rounded-lg border border-line bg-surface px-4 py-2 text-sm font-medium text-fg no-underline transition hover:bg-surface-2 hover:no-underline;
+  }
+  .btn-primary {
+    @apply border-transparent bg-brand text-brand-fg hover:bg-brand hover:opacity-90;
+  }
+  .btn-ghost {
+    @apply border-transparent bg-transparent text-muted hover:text-fg;
+  }
+  .chips {
+    @apply flex flex-wrap gap-2;
+  }
+  .chip {
+    @apply inline-flex items-center rounded-full bg-brand-soft px-3 py-0.5 text-xs font-medium text-brand no-underline;
+  }
+  a.chip:hover {
+    @apply underline;
+  }
+
+  /* Cards */
+  .card-grid {
+    @apply grid gap-4 sm:grid-cols-2 lg:grid-cols-3;
+  }
+  .card {
+    @apply relative space-y-3 rounded-xl border border-line bg-surface p-5 shadow-sm transition hover:shadow-md;
+  }
+  .card-title {
+    @apply text-lg;
+  }
+  .project-card a {
+    @apply text-fg no-underline;
+  }
+  .project-card a::after {
+    content: "";
+    @apply absolute inset-0 rounded-xl;
+  }
+  .project-card:focus-within {
+    @apply ring-2 ring-brand;
+  }
+  .project-card a:focus-visible {
+    outline: none;
+  }
+
+  /* Experience timeline */
+  .timeline {
+    @apply relative ml-2 space-y-10 border-l border-line pl-6;
+  }
+  .timeline-item {
+    @apply relative space-y-2;
+  }
+  .timeline-item::before {
+    content: "";
+    @apply absolute top-2 -left-[31px] size-3 rounded-full border-2 border-brand bg-bg;
+  }
+  .timeline-title {
+    @apply text-lg;
+  }
+  .timeline-meta {
+    @apply text-sm text-muted;
+  }
+  .bullets {
+    @apply list-disc space-y-1 pl-5 marker:text-muted;
+  }
+  .filter {
+    @apply mb-8 flex flex-wrap items-end gap-3;
+  }
+  .filter-row > div {
+    @apply min-w-48 flex-1;
+  }
+
+  /* Skills */
+  .skill-pills {
+    @apply flex flex-wrap gap-2;
+  }
+  .skill-pill {
+    @apply flex items-center gap-2 rounded-full border border-line bg-surface px-3 py-1 text-sm;
+  }
+  .skill-group {
+    @apply mt-10;
+  }
+  .skill-list {
+    @apply mt-4 divide-y divide-line rounded-xl border border-line bg-surface;
+  }
+  .skill-row {
+    @apply space-y-2 p-4 target:bg-brand-soft;
+    scroll-margin-top: 5rem;
+  }
+  .skill-main {
+    @apply flex flex-wrap items-center gap-x-4 gap-y-1;
+  }
+  .skill-name {
+    @apply text-base;
+  }
+  .meter {
+    @apply inline-flex gap-1;
+  }
+  .meter-dot {
+    @apply size-2.5 rounded-full bg-line;
+  }
+  .meter-dot.is-on {
+    @apply bg-brand;
+  }
+
+  /* Case study */
+  .meta-list {
+    @apply flex flex-wrap gap-x-5 gap-y-1 text-sm text-muted;
+  }
+  .case-layout {
+    @apply grid gap-8 lg:grid-cols-[14rem_minmax(0,1fr)];
+  }
+  .toc {
+    @apply text-sm lg:sticky lg:top-24 lg:self-start;
+  }
+  .toc-title {
+    @apply mb-2 font-semibold;
+  }
+  .toc ul {
+    @apply space-y-1 border-l border-line pl-3;
+  }
+  .toc a {
+    @apply text-muted;
+  }
+  .toc-l3 {
+    @apply pl-3;
+  }
+
+  /* Forms */
+  .label {
+    @apply mb-1 block text-sm font-medium;
+  }
+  .input {
+    @apply w-full rounded-lg border border-line bg-surface px-3 py-2 text-fg placeholder:text-muted;
+  }
+  .hp {
+    @apply absolute -left-[9999px] h-px w-px overflow-hidden;
+  }
+
+  /* Footer */
+  .site-footer {
+    @apply mt-10 border-t border-line py-6 text-sm text-muted;
+  }
+  .footer-row {
+    @apply flex flex-wrap items-center justify-between gap-3;
+  }
+  .footer-links {
+    @apply flex flex-wrap gap-4;
+  }
+  .footer-links a {
+    @apply text-muted;
+  }
+
+  /* Résumé page */
+  .resume {
+    @apply mx-auto max-w-3xl space-y-6;
+  }
+  .resume-actions {
+    @apply flex flex-wrap justify-end gap-2;
+  }
+  .resume-name {
+    @apply text-4xl;
+  }
+  .resume-headline {
+    @apply text-lg text-muted;
+  }
+  .resume-contact {
+    @apply mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm;
+  }
+  .resume-section h2 {
+    @apply mb-3 border-b border-line pb-1 text-sm font-semibold tracking-widest text-muted uppercase;
+  }
+  .resume-item {
+    @apply mb-4 space-y-1;
+  }
+  .resume-item h3 {
+    @apply text-base;
+  }
+  .resume-item ul {
+    @apply list-disc pl-5;
+  }
+  .resume-meta {
+    @apply text-sm text-muted;
+  }
+  .resume-skills dt {
+    @apply mt-2 font-semibold;
+  }
+}
+
+/* Markdown content (typography plugin) follows the theme tokens. Unlayered, so it wins. */
+.prose {
+  --tw-prose-body: var(--fg);
+  --tw-prose-headings: var(--fg);
+  --tw-prose-lead: var(--muted);
+  --tw-prose-links: var(--brand);
+  --tw-prose-bold: var(--fg);
+  --tw-prose-counters: var(--muted);
+  --tw-prose-bullets: var(--muted);
+  --tw-prose-hr: var(--line);
+  --tw-prose-quotes: var(--fg);
+  --tw-prose-quote-borders: var(--line);
+  --tw-prose-captions: var(--muted);
+  --tw-prose-code: var(--fg);
+  --tw-prose-th-borders: var(--line);
+  --tw-prose-td-borders: var(--line);
+  max-width: 70ch;
+}
+.prose pre.highlight {
+  border: 1px solid var(--line);
+  border-radius: 0.75rem;
+}
+
+@media print {
+  :root,
+  html.dark {
+    --bg: #fff;
+    --fg: #111;
+    --muted: #444;
+    --line: #ccc;
+    --surface: #fff;
+    --surface-2: #fff;
+    --brand: #111;
+  }
+  .site-header,
+  .site-footer,
+  .skip-link,
+  .sample-banner,
+  .no-print {
+    display: none !important;
+  }
+  .main {
+    padding: 0;
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .resume-link::after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    color: #444;
+  }
+  .resume-item {
+    break-inside: avoid;
+  }
+  @page {
+    size: A4;
+    margin: 14mm;
+  }
+}

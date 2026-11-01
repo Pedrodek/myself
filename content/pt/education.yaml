@@ -1,0 +1,9 @@
+- institution: Universidade Exemplo
+  degree: Bacharelado em Ciência da Computação
+  start: 2014-02
+  end: 2018-12
+- institution: Plataforma Exemplo de Cursos
+  degree: Certificação em Engenharia de Dados
+  start: 2021-03
+  end: 2021-09
+  notes: Curso de 120 horas com projeto final.

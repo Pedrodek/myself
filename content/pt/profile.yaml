@@ -1,0 +1,18 @@
+sample: true
+name: Seu Nome
+headline: Pessoa desenvolvedora Python · Backend e dados
+summary: |
+  Texto de exemplo: apresente-se em duas ou três frases. Diga que tipo de problema você resolve, em quais tecnologias é mais forte e o que procura nos próximos anos.
+
+  Todo o conteúdo desta pasta é fictício e deve ser substituído pelos seus dados.
+location: São Paulo, Brasil
+email: contato@example.com
+availability: Aberto(a) a novas oportunidades
+github_user: octocat
+links:
+  - label: GitHub
+    url: https://github.com/octocat
+    icon: github
+  - label: LinkedIn
+    url: https://www.linkedin.com/in/seu-usuario
+    icon: linkedin

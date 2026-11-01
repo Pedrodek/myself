@@ -1,0 +1,28 @@
+# Runs the production image locally, "like in production".
+# Usage:  copy .env.example to .env, set HUB_SECRET_KEY, then:  docker compose up --build
+services:
+  web:
+    build: .
+    image: resume-hub:local
+    env_file: .env
+    environment:
+      HUB_ENV: prod
+      HUB_SITE_URL: ${HUB_SITE_URL:-http://localhost:8000}
+      # Allow the sample content while you are still writing yours (remove for a real deploy).
+      HUB_ALLOW_SAMPLE_CONTENT: ${HUB_ALLOW_SAMPLE_CONTENT:-true}
+      HUB_TRUSTED_PROXIES: ${HUB_TRUSTED_PROXIES:-127.0.0.1}
+    ports:
+      - "127.0.0.1:8000:8000"
+    volumes:
+      - hub-data:/data
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+
+volumes:
+  hub-data:

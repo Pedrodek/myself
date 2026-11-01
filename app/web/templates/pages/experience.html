@@ -1,0 +1,76 @@
+{% extends layout %}
+{% block content %}
+  <header class="page-header">
+    <h1 class="page-title">{{ _("Experience") }}</h1>
+    <p class="lead">{{ _("Where I have worked and what I built there.") }}</p>
+  </header>
+  <form class="filter"
+        method="get"
+        action="/{{ locale }}/experience"
+        hx-get="/{{ locale }}/experience"
+        hx-trigger="change"
+        hx-target="#timeline"
+        hx-select="#timeline"
+        hx-swap="outerHTML"
+        hx-push-url="true">
+    <label class="label" for="tech">{{ _("Filter by technology") }}</label>
+    <select id="tech" name="tech" class="input">
+      <option value="">{{ _("All") }}</option>
+      {% for skill in tech_options %}
+        <option value="{{ skill.slug }}"
+                {% if skill.slug == tech %} selected{% endif %}>{{ skill.name }}</option>
+      {% endfor %}
+    </select>
+    <noscript>
+      <button class="btn" type="submit">{{ _("Apply") }}</button>
+    </noscript>
+  </form>
+  <div id="timeline" aria-live="polite">
+    {% if items %}
+      <ol class="timeline">
+        {% for item in items %}
+          <li class="timeline-item">
+            <h2 class="timeline-title">{{ item.role }} <span class="muted">· {{ item.company }}</span></h2>
+            <p class="timeline-meta">
+              <time datetime="{{ item.start.isoformat() }}">{{ item.start|date_fmt }}</time>
+              –
+              {% if item.end %}<time datetime="{{ item.end.isoformat() }}">{{ item.end|date_fmt }}</time>{% else %}{{ _("Present") }}{% endif %}
+              <span aria-hidden="true">·</span> {{ item.start|duration(item.end) }}
+              {% if item.location %}<span aria-hidden="true">·</span> {{ item.location }}{% endif %}
+            </p>
+            {% if item.summary %}<p>{{ item.summary }}</p>{% endif %}
+            {% if item.highlights %}
+              <ul class="bullets">
+                {% for highlight in item.highlights %}<li>{{ highlight }}</li>{% endfor %}
+              </ul>
+            {% endif %}
+            {% if item.tech %}
+              <ul class="chips" aria-label="{{ _('Technologies') }}">
+                {% for slug in item.tech %}
+                  <li><a class="chip"
+   href="/{{ locale }}/skills#skill-{{ slug }}">{{ content.skills[slug].name }}</a></li>
+                {% endfor %}
+              </ul>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ol>
+    {% else %}
+      <p class="empty">{{ _("No experience matches this filter.") }}</p>
+    {% endif %}
+  </div>
+  {% if content.education %}
+    <section class="section" aria-labelledby="education-title">
+      <h2 id="education-title" class="section-title">{{ _("Education") }}</h2>
+      <ul class="card-grid">
+        {% for edu in content.education %}
+          <li class="card">
+            <h3 class="card-title">{{ edu.degree }}</h3>
+            <p class="muted">{{ edu.institution }} · {{ edu.start|date_fmt("yyyy") }}{% if edu.end %} – {{ edu.end|date_fmt("yyyy") }}{% endif %}</p>
+            {% if edu.notes %}<p>{{ edu.notes }}</p>{% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+{% endblock %}

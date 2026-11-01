@@ -1,0 +1,49 @@
+{% extends layout %}
+{% from "components/macros.html" import project_card %}
+{% block content %}
+  <header class="page-header">
+    <h1 class="page-title">{{ _("Projects") }}</h1>
+    <p class="lead">{{ _("Case studies: the problem, the decisions and the result.") }}</p>
+  </header>
+  <form class="filter filter-row"
+        method="get"
+        action="/{{ locale }}/projects"
+        role="search"
+        hx-get="/{{ locale }}/projects"
+        hx-trigger="input delay:300ms, change, submit"
+        hx-target="#results"
+        hx-select="#results"
+        hx-swap="outerHTML"
+        hx-push-url="true">
+    <div>
+      <label class="label" for="q">{{ _("Search") }}</label>
+      <input id="q"
+             name="q"
+             type="search"
+             class="input"
+             value="{{ q }}"
+             maxlength="80"
+             autocomplete="off"
+             placeholder="{{ _('Title, technology or tag') }}">
+    </div>
+    <div>
+      <label class="label" for="tag">{{ _("Tag") }}</label>
+      <select id="tag" name="tag" class="input">
+        <option value="">{{ _("All") }}</option>
+        {% for name in tags %}<option value="{{ name }}"
+        {% if name == tag %} selected{% endif %}>{{ name }}</option>{% endfor %}
+      </select>
+    </div>
+    <noscript>
+      <button class="btn" type="submit">{{ _("Search") }}</button>
+    </noscript>
+  </form>
+  <div id="results" aria-live="polite">
+    {% if items %}
+      <p class="muted text-sm">{{ ngettext("%(num)d project", "%(num)d projects", items|length) }}</p>
+      <div class="card-grid">{% for project in items %}{{ project_card(project) }}{% endfor %}</div>
+    {% else %}
+      <p class="empty">{{ _("No projects match your search.") }}</p>
+    {% endif %}
+  </div>
+{% endblock %}

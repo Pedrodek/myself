@@ -1,0 +1,343 @@
+# English translations for resume-hub.
+# Copyright (C) 2026 ORGANIZATION
+# This file is distributed under the same license as the resume-hub project.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2026.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: resume-hub 0.1.0\n"
+"Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
+"POT-Creation-Date: 2026-10-31 21:30-0300\n"
+"PO-Revision-Date: 2026-10-29 13:57-0300\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language: en\n"
+"Language-Team: en <LL@li.org>\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: app/core/errors.py
+msgid "Page not found"
+msgstr ""
+
+#: app/core/errors.py
+msgid "The page you are looking for does not exist or has moved."
+msgstr ""
+
+#: app/core/errors.py
+msgid "Method not allowed"
+msgstr ""
+
+#: app/core/errors.py
+msgid "This address does not accept that kind of request."
+msgstr ""
+
+#: app/core/errors.py
+msgid "Invalid request"
+msgstr ""
+
+#: app/core/errors.py
+msgid "Some of the submitted data is not valid."
+msgstr ""
+
+#: app/core/errors.py
+msgid "Too many requests"
+msgstr ""
+
+#: app/core/errors.py
+msgid "Please wait a little before trying again."
+msgstr ""
+
+#: app/core/errors.py
+msgid "Something went wrong"
+msgstr ""
+
+#: app/core/errors.py
+msgid "An unexpected error occurred and was logged."
+msgstr ""
+
+#: app/core/errors.py
+msgid "Request failed"
+msgstr ""
+
+#: app/core/errors.py
+msgid "The request could not be completed."
+msgstr ""
+
+#: app/core/templating.py
+msgid "Home"
+msgstr ""
+
+#: app/core/templating.py app/web/templates/pages/experience.html
+#: app/web/templates/pages/resume.html
+msgid "Experience"
+msgstr ""
+
+#: app/core/templating.py app/web/templates/pages/project.html
+#: app/web/templates/pages/projects.html
+msgid "Projects"
+msgstr ""
+
+#: app/core/templating.py app/web/templates/pages/resume.html
+#: app/web/templates/pages/skills.html
+msgid "Skills"
+msgstr ""
+
+#: app/core/templating.py app/web/templates/pages/home.html
+msgid "Résumé"
+msgstr ""
+
+#: app/core/templating.py
+#, python-format
+msgid "%(n)d yr"
+msgid_plural "%(n)d yrs"
+msgstr[0] ""
+msgstr[1] ""
+
+#: app/core/templating.py
+#, python-format
+msgid "%(n)d mo"
+msgid_plural "%(n)d mos"
+msgstr[0] ""
+msgstr[1] ""
+
+#: app/core/templating.py
+#, fuzzy, python-format
+msgid "%(n)g year"
+msgid_plural "%(n)g years"
+msgstr[0] ""
+msgstr[1] ""
+
+#: app/web/templates/base.html
+msgid "Skip to content"
+msgstr ""
+
+#: app/web/templates/base.html
+msgid "Sample content: replace it with your own data in the content folder and remove sample: true from profile.yaml."
+msgstr ""
+
+#: app/web/templates/base.html
+msgid "Menu"
+msgstr ""
+
+#: app/web/templates/base.html
+msgid "Dark mode"
+msgstr ""
+
+#: app/web/templates/base.html app/web/templates/pages/about_site.html
+msgid "About this site"
+msgstr ""
+
+#: app/web/templates/base.html
+msgid "API"
+msgstr ""
+
+#: app/web/templates/components/macros.html
+msgid "Main"
+msgstr ""
+
+#: app/web/templates/components/macros.html
+msgid "Language"
+msgstr ""
+
+#: app/web/templates/components/macros.html
+#, python-format
+msgid "Level %(level)d of 5"
+msgstr ""
+
+#: app/web/templates/components/macros.html app/web/templates/pages/skills.html
+msgid "Tags"
+msgstr ""
+
+#: app/web/templates/components/macros.html
+msgid "opens in a new tab"
+msgstr ""
+
+#: app/web/templates/errors/error.html
+msgid "Back to the home page"
+msgstr ""
+
+#: app/web/templates/errors/error.html
+msgid "Reference"
+msgstr ""
+
+#: app/web/templates/pages/about_site.html
+msgid "This site is also my portfolio: every part of it is a small demonstration of how I build software with Python."
+msgstr ""
+
+#: app/web/templates/pages/about_site.html
+msgid "How it is built"
+msgstr ""
+
+#: app/web/templates/pages/about_site.html
+msgid "FastAPI serves server-rendered pages with Jinja2; HTMX and Alpine.js add interactivity, and the site works without JavaScript."
+msgstr ""
+
+#: app/web/templates/pages/about_site.html
+msgid "Content lives in YAML and Markdown files validated by Pydantic at startup, in Portuguese and English."
+msgstr ""
+
+#: app/web/templates/pages/about_site.html
+msgid "Tailwind CSS is compiled with a standalone binary installed from pip: there is no Node.js in the project."
+msgstr ""
+
+#: app/web/templates/pages/about_site.html
+msgid "A strict Content-Security-Policy is enforced: no inline scripts and no eval; the few pages that need more use a dedicated, audited policy."
+msgstr ""
+
+#: app/web/templates/pages/about_site.html
+msgid "Type hints are checked with mypy in strict mode, code is linted with ruff, and the test suite covers pages, headers, i18n and the browser."
+msgstr ""
+
+#: app/web/templates/pages/about_site.html
+msgid "Open API"
+msgstr ""
+
+#: app/web/templates/pages/about_site.html
+msgid "The same content is available as read-only JSON."
+msgstr ""
+
+#: app/web/templates/pages/about_site.html
+msgid "Open the API reference"
+msgstr ""
+
+#: app/web/templates/pages/about_site.html
+msgid "Version"
+msgstr ""
+
+#: app/web/templates/pages/experience.html
+msgid "Where I have worked and what I built there."
+msgstr ""
+
+#: app/web/templates/pages/experience.html
+msgid "Filter by technology"
+msgstr ""
+
+#: app/web/templates/pages/experience.html
+#: app/web/templates/pages/projects.html
+msgid "All"
+msgstr ""
+
+#: app/web/templates/pages/experience.html
+msgid "Apply"
+msgstr ""
+
+#: app/web/templates/pages/experience.html app/web/templates/pages/home.html
+#: app/web/templates/pages/resume.html
+msgid "Present"
+msgstr ""
+
+#: app/web/templates/pages/experience.html
+msgid "Technologies"
+msgstr ""
+
+#: app/web/templates/pages/experience.html
+msgid "No experience matches this filter."
+msgstr ""
+
+#: app/web/templates/pages/experience.html app/web/templates/pages/resume.html
+msgid "Education"
+msgstr ""
+
+#: app/web/templates/pages/home.html
+msgid "View projects"
+msgstr ""
+
+#: app/web/templates/pages/home.html
+msgid "Featured projects"
+msgstr ""
+
+#: app/web/templates/pages/home.html
+msgid "All projects"
+msgstr ""
+
+#: app/web/templates/pages/home.html
+msgid "Strongest skills"
+msgstr ""
+
+#: app/web/templates/pages/home.html
+msgid "All skills"
+msgstr ""
+
+#: app/web/templates/pages/home.html
+msgid "Most recent role"
+msgstr ""
+
+#: app/web/templates/pages/home.html
+msgid "Full experience"
+msgstr ""
+
+#: app/web/templates/pages/project.html
+msgid "Breadcrumb"
+msgstr ""
+
+#: app/web/templates/pages/project.html
+#, python-format
+msgid "%(num)d min read"
+msgstr ""
+
+#: app/web/templates/pages/project.html
+msgid "Live demo"
+msgstr ""
+
+#: app/web/templates/pages/project.html
+msgid "On this page"
+msgstr ""
+
+#: app/web/templates/pages/project.html
+msgid "Skills demonstrated"
+msgstr ""
+
+#: app/web/templates/pages/projects.html
+msgid "Case studies: the problem, the decisions and the result."
+msgstr ""
+
+#: app/web/templates/pages/projects.html
+msgid "Search"
+msgstr ""
+
+#: app/web/templates/pages/projects.html
+msgid "Title, technology or tag"
+msgstr ""
+
+#: app/web/templates/pages/projects.html
+msgid "Tag"
+msgstr ""
+
+#: app/web/templates/pages/projects.html
+#, python-format
+msgid "%(num)d project"
+msgid_plural "%(num)d projects"
+msgstr[0] ""
+msgstr[1] ""
+
+#: app/web/templates/pages/projects.html
+msgid "No projects match your search."
+msgstr ""
+
+#: app/web/templates/pages/resume.html
+msgid "Print"
+msgstr ""
+
+#: app/web/templates/pages/resume.html
+msgid "Download PDF"
+msgstr ""
+
+#: app/web/templates/pages/resume.html
+msgid "Summary"
+msgstr ""
+
+#: app/web/templates/pages/resume.html
+msgid "Selected projects"
+msgstr ""
+
+#: app/web/templates/pages/skills.html
+msgid "Self-assessed level (1 to 5), years of practice and the projects that prove it."
+msgstr ""
+
+#: app/web/templates/pages/skills.html
+msgid "Evidence"
+msgstr ""
+

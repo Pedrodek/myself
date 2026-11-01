@@ -1,0 +1,44 @@
+{% extends layout %}
+{% from "components/macros.html" import icon, external_link %}
+{% block content %}
+  <nav class="breadcrumb" aria-label="{{ _('Breadcrumb') }}">
+    <a href="/{{ locale }}/projects">{{ _("Projects") }}</a>
+    <span aria-hidden="true">/</span>
+    <span aria-current="page">{{ project.title }}</span>
+  </nav>
+  <article class="case-study">
+    <header class="page-header">
+      <h1 class="page-title">{{ project.title }}</h1>
+      <p class="lead">{{ project.summary }}</p>
+      <ul class="meta-list">
+        {% if project.year %}<li>{{ project.year }}</li>{% endif %}
+        <li>{{ _("%(num)d min read", num=project.reading_minutes) }}</li>
+        {% if project.repo %}<li>{{ external_link("https://github.com/" ~ project.repo, project.repo) }}</li>{% endif %}
+        {% if project.url %}<li>{{ external_link(project.url, _("Live demo")) }}</li>{% endif %}
+      </ul>
+    </header>
+    <div class="case-layout">
+      {% if project.toc|length >= 3 %}
+        <aside class="toc" aria-label="{{ _('On this page') }}">
+          <p class="toc-title">{{ _("On this page") }}</p>
+          <ul>
+            {% for item in project.toc %}
+              <li class="toc-l{{ item.level }}"><a href="#{{ item.id }}" hx-boost="false">{{ item.text }}</a></li>
+            {% endfor %}
+          </ul>
+        </aside>
+      {% endif %}
+      <div class="prose">{{ project.body_html|safe }}</div>
+    </div>
+    {% if project_skills %}
+      <section class="section" aria-labelledby="project-skills">
+        <h2 id="project-skills" class="section-title">{{ _("Skills demonstrated") }}</h2>
+        <ul class="chips">
+          {% for skill in project_skills %}
+            <li><a class="chip" href="/{{ locale }}/skills#skill-{{ skill.slug }}">{{ skill.name }}</a></li>
+          {% endfor %}
+        </ul>
+      </section>
+    {% endif %}
+  </article>
+{% endblock %}

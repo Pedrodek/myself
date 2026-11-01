@@ -1,0 +1,18 @@
+sample: true
+name: Your Name
+headline: Python developer · Backend and data
+summary: |
+  Sample text: introduce yourself in two or three sentences. Say what kind of problems you solve, which technologies you are strongest in and what you are looking for in the next few years.
+
+  Everything in this folder is fictional and must be replaced with your own data.
+location: São Paulo, Brazil
+email: contato@example.com
+availability: Open to new opportunities
+github_user: octocat
+links:
+  - label: GitHub
+    url: https://github.com/octocat
+    icon: github
+  - label: LinkedIn
+    url: https://www.linkedin.com/in/your-username
+    icon: linkedin

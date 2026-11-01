@@ -1,0 +1,35 @@
+{% extends layout %}
+{% from "components/macros.html" import level_meter %}
+{% block content %}
+  <header class="page-header">
+    <h1 class="page-title">{{ _("Skills") }}</h1>
+    <p class="lead">{{ _("Self-assessed level (1 to 5), years of practice and the projects that prove it.") }}</p>
+  </header>
+  {% for group in groups %}
+    <section class="skill-group" aria-labelledby="group-{{ loop.index }}">
+      <h2 id="group-{{ loop.index }}" class="section-title">{{ group.category }}</h2>
+      <ul class="skill-list">
+        {% for skill in group.skills %}
+          <li id="skill-{{ skill.slug }}" class="skill-row">
+            <div class="skill-main">
+              <h3 class="skill-name">{{ skill.name }}</h3>
+              {{ level_meter(skill.level) }}
+              {% if skill.years %}<span class="muted text-sm">{{ skill.years|years }}</span>{% endif %}
+            </div>
+            {% if skill.tags %}
+              <ul class="chips" aria-label="{{ _('Tags') }}">
+                {% for tag in skill.tags %}<li class="chip">{{ tag }}</li>{% endfor %}
+              </ul>
+            {% endif %}
+            {% if skill.evidence %}
+              <p class="text-sm">
+                <span class="muted">{{ _("Evidence") }}:</span>
+                {% for slug in skill.evidence %}<a href="/{{ locale }}/projects/{{ slug }}">{{ content.projects_by_slug[slug].title }}</a>{% if not loop.last %}, {% endif %}{% endfor %}
+              </p>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endfor %}
+{% endblock %}

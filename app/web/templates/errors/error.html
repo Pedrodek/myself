@@ -1,0 +1,10 @@
+{% extends layout %}
+{% block content %}
+  <section class="error-page" aria-labelledby="error-title">
+    <p class="eyebrow">{{ status_code }}</p>
+    <h1 id="error-title" class="page-title">{{ heading }}</h1>
+    <p class="lead">{{ message }}</p>
+    <p><a class="btn btn-primary" href="/{{ locale }}/" hx-boost="false">{{ _("Back to the home page") }}</a></p>
+    {% if request_id %}<p class="muted text-sm">{{ _("Reference") }}: <code>{{ request_id }}</code></p>{% endif %}
+  </section>
+{% endblock %}

@@ -1,0 +1,341 @@
+# Portuguese (Brazil) translations for resume-hub.
+# This file is distributed under the same license as the resume-hub project.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: resume-hub 0.1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-10-31 21:30-0300\n"
+"PO-Revision-Date: 2026-10-29 14:30-0300\n"
+"Last-Translator: \n"
+"Language: pt_BR\n"
+"Language-Team: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: Babel 2.18.0\n"
+
+#: app/core/errors.py
+msgid "Page not found"
+msgstr "Página não encontrada"
+
+#: app/core/errors.py
+msgid "The page you are looking for does not exist or has moved."
+msgstr "A página que você procura não existe ou foi movida."
+
+#: app/core/errors.py
+msgid "Method not allowed"
+msgstr "Método não permitido"
+
+#: app/core/errors.py
+msgid "This address does not accept that kind of request."
+msgstr "Este endereço não aceita esse tipo de requisição."
+
+#: app/core/errors.py
+msgid "Invalid request"
+msgstr "Requisição inválida"
+
+#: app/core/errors.py
+msgid "Some of the submitted data is not valid."
+msgstr "Alguns dos dados enviados não são válidos."
+
+#: app/core/errors.py
+msgid "Too many requests"
+msgstr "Muitas requisições"
+
+#: app/core/errors.py
+msgid "Please wait a little before trying again."
+msgstr "Aguarde um pouco antes de tentar novamente."
+
+#: app/core/errors.py
+msgid "Something went wrong"
+msgstr "Algo deu errado"
+
+#: app/core/errors.py
+msgid "An unexpected error occurred and was logged."
+msgstr "Ocorreu um erro inesperado e ele foi registrado."
+
+#: app/core/errors.py
+msgid "Request failed"
+msgstr "A requisição falhou"
+
+#: app/core/errors.py
+msgid "The request could not be completed."
+msgstr "Não foi possível concluir a requisição."
+
+#: app/core/templating.py
+msgid "Home"
+msgstr "Início"
+
+#: app/core/templating.py app/web/templates/pages/experience.html
+#: app/web/templates/pages/resume.html
+msgid "Experience"
+msgstr "Experiência"
+
+#: app/core/templating.py app/web/templates/pages/project.html
+#: app/web/templates/pages/projects.html
+msgid "Projects"
+msgstr "Projetos"
+
+#: app/core/templating.py app/web/templates/pages/resume.html
+#: app/web/templates/pages/skills.html
+msgid "Skills"
+msgstr "Habilidades"
+
+#: app/core/templating.py app/web/templates/pages/home.html
+msgid "Résumé"
+msgstr "Currículo"
+
+#: app/core/templating.py
+#, python-format
+msgid "%(n)d yr"
+msgid_plural "%(n)d yrs"
+msgstr[0] "%(n)d ano"
+msgstr[1] "%(n)d anos"
+
+#: app/core/templating.py
+#, python-format
+msgid "%(n)d mo"
+msgid_plural "%(n)d mos"
+msgstr[0] "%(n)d mês"
+msgstr[1] "%(n)d meses"
+
+#: app/core/templating.py
+#, python-format
+msgid "%(n)g year"
+msgid_plural "%(n)g years"
+msgstr[0] "%(n)g ano"
+msgstr[1] "%(n)g anos"
+
+#: app/web/templates/base.html
+msgid "Skip to content"
+msgstr "Pular para o conteúdo"
+
+#: app/web/templates/base.html
+msgid "Sample content: replace it with your own data in the content folder and remove sample: true from profile.yaml."
+msgstr "Conteúdo de exemplo: substitua-o pelos seus dados na pasta content e remova sample: true do profile.yaml."
+
+#: app/web/templates/base.html
+msgid "Menu"
+msgstr "Menu"
+
+#: app/web/templates/base.html
+msgid "Dark mode"
+msgstr "Modo escuro"
+
+#: app/web/templates/base.html app/web/templates/pages/about_site.html
+msgid "About this site"
+msgstr "Sobre este site"
+
+#: app/web/templates/base.html
+msgid "API"
+msgstr "API"
+
+#: app/web/templates/components/macros.html
+msgid "Main"
+msgstr "Principal"
+
+#: app/web/templates/components/macros.html
+msgid "Language"
+msgstr "Idioma"
+
+#: app/web/templates/components/macros.html
+#, python-format
+msgid "Level %(level)d of 5"
+msgstr "Nível %(level)d de 5"
+
+#: app/web/templates/components/macros.html app/web/templates/pages/skills.html
+msgid "Tags"
+msgstr "Tags"
+
+#: app/web/templates/components/macros.html
+msgid "opens in a new tab"
+msgstr "abre em uma nova aba"
+
+#: app/web/templates/errors/error.html
+msgid "Back to the home page"
+msgstr "Voltar para a página inicial"
+
+#: app/web/templates/errors/error.html
+msgid "Reference"
+msgstr "Referência"
+
+#: app/web/templates/pages/about_site.html
+msgid "This site is also my portfolio: every part of it is a small demonstration of how I build software with Python."
+msgstr "Este site também é o meu portfólio: cada parte dele é uma pequena demonstração de como construo software com Python."
+
+#: app/web/templates/pages/about_site.html
+msgid "How it is built"
+msgstr "Como ele é construído"
+
+#: app/web/templates/pages/about_site.html
+msgid "FastAPI serves server-rendered pages with Jinja2; HTMX and Alpine.js add interactivity, and the site works without JavaScript."
+msgstr "O FastAPI serve páginas renderizadas no servidor com Jinja2; HTMX e Alpine.js adicionam interatividade, e o site funciona sem JavaScript."
+
+#: app/web/templates/pages/about_site.html
+msgid "Content lives in YAML and Markdown files validated by Pydantic at startup, in Portuguese and English."
+msgstr "O conteúdo vive em arquivos YAML e Markdown validados pelo Pydantic na inicialização, em português e inglês."
+
+#: app/web/templates/pages/about_site.html
+msgid "Tailwind CSS is compiled with a standalone binary installed from pip: there is no Node.js in the project."
+msgstr "O Tailwind CSS é compilado com um binário independente instalado pelo pip: não há Node.js no projeto."
+
+#: app/web/templates/pages/about_site.html
+msgid "A strict Content-Security-Policy is enforced: no inline scripts and no eval; the few pages that need more use a dedicated, audited policy."
+msgstr "Uma Content-Security-Policy estrita é aplicada: sem scripts inline e sem eval; as poucas páginas que precisam de mais usam uma política própria e auditada."
+
+#: app/web/templates/pages/about_site.html
+msgid "Type hints are checked with mypy in strict mode, code is linted with ruff, and the test suite covers pages, headers, i18n and the browser."
+msgstr "As anotações de tipo são verificadas com mypy em modo estrito, o código passa pelo ruff e a suíte de testes cobre páginas, cabeçalhos, i18n e o navegador."
+
+#: app/web/templates/pages/about_site.html
+msgid "Open API"
+msgstr "API aberta"
+
+#: app/web/templates/pages/about_site.html
+msgid "The same content is available as read-only JSON."
+msgstr "O mesmo conteúdo está disponível como JSON somente leitura."
+
+#: app/web/templates/pages/about_site.html
+msgid "Open the API reference"
+msgstr "Abrir a referência da API"
+
+#: app/web/templates/pages/about_site.html
+msgid "Version"
+msgstr "Versão"
+
+#: app/web/templates/pages/experience.html
+msgid "Where I have worked and what I built there."
+msgstr "Onde trabalhei e o que construí lá."
+
+#: app/web/templates/pages/experience.html
+msgid "Filter by technology"
+msgstr "Filtrar por tecnologia"
+
+#: app/web/templates/pages/experience.html
+#: app/web/templates/pages/projects.html
+msgid "All"
+msgstr "Todas"
+
+#: app/web/templates/pages/experience.html
+msgid "Apply"
+msgstr "Aplicar"
+
+#: app/web/templates/pages/experience.html app/web/templates/pages/home.html
+#: app/web/templates/pages/resume.html
+msgid "Present"
+msgstr "Atual"
+
+#: app/web/templates/pages/experience.html
+msgid "Technologies"
+msgstr "Tecnologias"
+
+#: app/web/templates/pages/experience.html
+msgid "No experience matches this filter."
+msgstr "Nenhuma experiência corresponde a este filtro."
+
+#: app/web/templates/pages/experience.html app/web/templates/pages/resume.html
+msgid "Education"
+msgstr "Formação"
+
+#: app/web/templates/pages/home.html
+msgid "View projects"
+msgstr "Ver projetos"
+
+#: app/web/templates/pages/home.html
+msgid "Featured projects"
+msgstr "Projetos em destaque"
+
+#: app/web/templates/pages/home.html
+msgid "All projects"
+msgstr "Todos os projetos"
+
+#: app/web/templates/pages/home.html
+msgid "Strongest skills"
+msgstr "Habilidades mais fortes"
+
+#: app/web/templates/pages/home.html
+msgid "All skills"
+msgstr "Todas as habilidades"
+
+#: app/web/templates/pages/home.html
+msgid "Most recent role"
+msgstr "Cargo mais recente"
+
+#: app/web/templates/pages/home.html
+msgid "Full experience"
+msgstr "Experiência completa"
+
+#: app/web/templates/pages/project.html
+msgid "Breadcrumb"
+msgstr "Trilha de navegação"
+
+#: app/web/templates/pages/project.html
+#, python-format
+msgid "%(num)d min read"
+msgstr "%(num)d min de leitura"
+
+#: app/web/templates/pages/project.html
+msgid "Live demo"
+msgstr "Demonstração ao vivo"
+
+#: app/web/templates/pages/project.html
+msgid "On this page"
+msgstr "Nesta página"
+
+#: app/web/templates/pages/project.html
+msgid "Skills demonstrated"
+msgstr "Habilidades demonstradas"
+
+#: app/web/templates/pages/projects.html
+msgid "Case studies: the problem, the decisions and the result."
+msgstr "Estudos de caso: o problema, as decisões e o resultado."
+
+#: app/web/templates/pages/projects.html
+msgid "Search"
+msgstr "Buscar"
+
+#: app/web/templates/pages/projects.html
+msgid "Title, technology or tag"
+msgstr "Título, tecnologia ou tag"
+
+#: app/web/templates/pages/projects.html
+msgid "Tag"
+msgstr "Tag"
+
+#: app/web/templates/pages/projects.html
+#, python-format
+msgid "%(num)d project"
+msgid_plural "%(num)d projects"
+msgstr[0] "%(num)d projeto"
+msgstr[1] "%(num)d projetos"
+
+#: app/web/templates/pages/projects.html
+msgid "No projects match your search."
+msgstr "Nenhum projeto corresponde à sua busca."
+
+#: app/web/templates/pages/resume.html
+msgid "Print"
+msgstr "Imprimir"
+
+#: app/web/templates/pages/resume.html
+msgid "Download PDF"
+msgstr "Baixar PDF"
+
+#: app/web/templates/pages/resume.html
+msgid "Summary"
+msgstr "Resumo"
+
+#: app/web/templates/pages/resume.html
+msgid "Selected projects"
+msgstr "Projetos selecionados"
+
+#: app/web/templates/pages/skills.html
+msgid "Self-assessed level (1 to 5), years of practice and the projects that prove it."
+msgstr "Nível autoavaliado (1 a 5), anos de prática e os projetos que comprovam."
+
+#: app/web/templates/pages/skills.html
+msgid "Evidence"
+msgstr "Evidências"
+

@@ -1,0 +1,87 @@
+{% from "components/macros.html" import icon, nav_menu, lang_switch %}
+<!DOCTYPE html>
+<html lang="{{ html_lang }}" data-locale="{{ locale }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% block title_tag %}<title>{{ page_title }}</title>{% endblock %}
+    <meta name="description" content="{{ page_description }}">
+    <meta name="color-scheme" content="light dark">
+    <link rel="canonical" href="{{ canonical }}">
+    {% for code, href in alt_urls.items() %}
+      <link rel="alternate"
+            hreflang="{{ hreflang[code] }}"
+            href="{{ site_url }}{{ href }}">
+    {% endfor %}
+    <link rel="alternate"
+          hreflang="x-default"
+          href="{{ site_url }}{{ alt_urls[default_locale] }}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="{{ profile.name }}">
+    <meta property="og:title" content="{{ page_title }}">
+    <meta property="og:description" content="{{ page_description }}">
+    <meta property="og:url" content="{{ canonical }}">
+    <meta property="og:locale" content="{{ html_lang|replace('-', '_') }}">
+    {% if og_image %}
+      <meta property="og:image" content="{{ og_image }}">
+      <meta name="twitter:card" content="summary_large_image">
+    {% else %}
+      <meta name="twitter:card" content="summary">
+    {% endif %}
+    <meta name="htmx-config" content='{{ htmx_config|tojson }}'>
+    <link rel="icon"
+          href="{{ static('img/favicon.svg') }}"
+          type="image/svg+xml">
+    <link rel="stylesheet" href="{{ static('css/app.css') }}">
+    {% block head_extra %}{% endblock %}
+    <script src="{{ static('js/theme-init.js') }}"></script>
+    <script defer src="{{ static('js/app.js') }}"></script>
+    <script defer src="{{ static('vendor/alpine-csp.min.js') }}"></script>
+    <script defer src="{{ static('vendor/htmx.min.js') }}"></script>
+    <script type="application/ld+json">{{ jsonld|tojson }}</script>
+  </head>
+  <body hx-boost="true" hx-target="#main" hx-swap="innerHTML show:window:top">
+    <a class="skip-link" href="#main">{{ _("Skip to content") }}</a>
+    {% if sample_banner %}
+      <div class="sample-banner" role="note">{{ _("Sample content: replace it with your own data in the content folder and remove sample: true from profile.yaml.") }}</div>
+    {% endif %}
+    <header class="site-header" x-data="navMenu" @nav-close.window="close">
+      <div class="header-row">
+        <a class="brand" href="/{{ locale }}/">{{ profile.name }}</a>
+        <button type="button"
+                class="icon-btn md:hidden"
+                @click="toggle"
+                :aria-expanded="open"
+                aria-controls="site-nav"
+                aria-label="{{ _('Menu') }}">{{ icon("menu") }}</button>
+        {{ nav_menu(nav, current) }}
+        <div class="header-tools">
+          {{ lang_switch(alt_urls) }}
+          <button type="button"
+                  class="icon-btn"
+                  x-data="themeToggle"
+                  @click="toggle"
+                  :aria-pressed="dark"
+                  aria-label="{{ _('Dark mode') }}">
+            <span class="theme-icon-light">{{ icon("moon") }}</span>
+            <span class="theme-icon-dark">{{ icon("sun") }}</span>
+          </button>
+        </div>
+      </div>
+    </header>
+    <main id="main" class="main wrap" tabindex="-1">
+      {% block content %}{% endblock %}
+    </main>
+    <footer class="site-footer">
+      <div class="wrap footer-row">
+        <p>© {{ now_year }} {{ profile.name }}</p>
+        <ul class="footer-links">
+          <li><a href="/{{ locale }}/about-site">{{ _("About this site") }}</a></li>
+          <li><a href="/api/docs" hx-boost="false">{{ _("API") }}</a></li>
+        </ul>
+        <p class="muted">v{{ app_version }}</p>
+      </div>
+    </footer>
+    <div id="announcer" class="sr-only" role="status" aria-live="polite"></div>
+  </body>
+</html>

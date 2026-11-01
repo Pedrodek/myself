@@ -1,0 +1,30 @@
+{
+  "tailwindcss": "v4.3.3",
+  "vendor": {
+    "htmx.min.js": {
+      "url": "https://cdn.jsdelivr.net/npm/htmx.org@2.0.11/dist/htmx.min.js",
+      "integrity": "sha384-2OatzQy1H+Zd/IIrjr1TcuDGqLXeHhbooAyJY1KdQMKnr4LZ22k31GBLdYKHmVjg"
+    },
+    "alpine-csp.min.js": {
+      "url": "https://cdn.jsdelivr.net/npm/@alpinejs/csp@3.17.5/dist/cdn.min.js",
+      "integrity": "sha384-Q4UOujiwqAb/jTt3ki4pdkETk4I3rIFQX8h271PLI41okj/YIKY7IQQFMw73wkrX"
+    },
+    "xterm.js": {
+      "url": "https://cdn.jsdelivr.net/npm/@xterm/xterm@6.0.0/lib/xterm.js",
+      "integrity": "sha384-f/1U6Z9wM4D71a5eRXEZnyOTMOvjqxr2XLwh+Go1OvIl3L3tOcvUrzudnhbECwl4"
+    },
+    "xterm.css": {
+      "url": "https://cdn.jsdelivr.net/npm/@xterm/xterm@6.0.0/css/xterm.css",
+      "integrity": "sha384-n2n7twoohnW+d3myBKaUgl7DSiwidw6MkQy9oesGzkPpMjejKRR3XlnD+5yCdtBD"
+    },
+    "addon-fit.js": {
+      "url": "https://cdn.jsdelivr.net/npm/@xterm/addon-fit@0.11.0/lib/addon-fit.js",
+      "integrity": "sha384-txoiwu4RR2GD3qySbaj+BbzibkLbSJRcfqGYMu6z1EqHil4A2dyBiBW5dlacG6OR"
+    }
+  },
+  "plotly": {
+    "package": "plotly",
+    "version": "7.1.0",
+    "integrity": "sha384-AFNp2MtSm5/oZbEs/J19F/Ah57MEiVsoed8nE3fq2Wnccdl1u/EkyJ9XKKU8rt7+"
+  }
+}

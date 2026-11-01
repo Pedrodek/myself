@@ -1,0 +1,77 @@
+# Tool configuration only (PLANO_DE_IMPLEMENTACAO.md, D15).
+# Dependencies live in requirements.txt and requirements-dev.txt.
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+extend-exclude = ["app/web/static/vendor", "app/web/static/dist"]
+
+[tool.ruff.lint]
+select = [
+  "E", "F", "W", "I", "N", "UP", "B", "A", "C4", "DTZ", "T20", "SIM", "PT", "RET",
+  "ARG", "PTH", "PERF", "RUF", "ASYNC", "S", "FAST", "TC", "LOG", "G",
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["app"]
+
+[tool.ruff.lint.flake8-type-checking]
+runtime-evaluated-base-classes = [
+  "pydantic.BaseModel",
+  "pydantic_settings.BaseSettings",
+  "sqlalchemy.orm.DeclarativeBase",
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "S105", "S106", "S311", "ARG001", "ARG002", "PT018"]
+
+[tool.ruff.format]
+quote-style = "double"
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+plugins = ["pydantic.mypy"]
+files = ["app"]
+warn_unused_ignores = true
+
+[[tool.mypy.overrides]]
+module = ["plotly", "plotly.*"]
+ignore_missing_imports = true
+
+[tool.pytest.ini_options]
+minversion = "9.0"
+testpaths = ["tests"]
+pythonpath = ["."]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+addopts = "-ra --strict-markers --strict-config -m 'not e2e'"
+markers = [
+  "e2e: browser tests (run with: pytest -m e2e tests/e2e)",
+  "slow: slow tests",
+]
+# Warnings are errors, except one deprecation raised inside pytest-playwright itself (pytest 9).
+filterwarnings = [
+  "error",
+  "ignore:Session-scoped fixtures defined as instance methods:pytest.PytestRemovedIn10Warning",
+]
+
+[tool.coverage.run]
+branch = true
+source = ["app"]
+
+[tool.coverage.report]
+fail_under = 85
+show_missing = true
+exclude_also = [
+  "if TYPE_CHECKING:",
+  "raise NotImplementedError",
+  "if __name__ == .__main__.:",
+]
+
+[tool.djlint]
+profile = "jinja"
+extension = "html"
+indent = 2
+max_line_length = 120
+ignore = "H006,H021,H023,H030,H031,J018"

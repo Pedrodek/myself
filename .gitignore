@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.python-version
+
+# Secrets and local config
+.env
+.env.*
+!.env.example
+
+# Tool caches and reports
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.hypothesis/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+test-results/
+
+# Project runtime and generated artifacts
+data/
+build/
+app/web/static/dist/
+app/web/static/vendor/
+app/web/static/css/_pygments.css
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+node_modules/

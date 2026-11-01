@@ -1,0 +1,58 @@
+{% extends layout %}
+{% from "components/macros.html" import icon, link_icon, project_card, level_meter %}
+{% block content %}
+  <section class="hero" aria-labelledby="hero-title">
+    <p class="eyebrow">
+      {% if profile.location %}{{ profile.location }}{% endif %}
+      {% if profile.availability %}<span aria-hidden="true">·</span> {{ profile.availability }}{% endif %}
+    </p>
+    <h1 id="hero-title" class="hero-title">{{ profile.name }}</h1>
+    <p class="hero-headline">{{ profile.headline }}</p>
+    <p class="hero-summary">{{ profile.summary }}</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="/{{ locale }}/projects">{{ _("View projects") }}{{ icon("arrow-right") }}</a>
+      <a class="btn" href="/{{ locale }}/resume">{{ _("Résumé") }}</a>
+      {% for link in profile.links %}
+        <a class="btn btn-ghost"
+           href="{{ link.url }}"
+           {% if link.url.startswith("http") %}target="_blank" rel="me noopener noreferrer"{% endif %}>{{ link_icon(link) }}<span>{{ link.label }}</span></a>
+      {% endfor %}
+    </div>
+  </section>
+  {% if featured %}
+    <section class="section" aria-labelledby="featured-title">
+      <div class="section-head">
+        <h2 id="featured-title" class="section-title">{{ _("Featured projects") }}</h2>
+        <a href="/{{ locale }}/projects">{{ _("All projects") }}</a>
+      </div>
+      <div class="card-grid">{% for project in featured %}{{ project_card(project) }}{% endfor %}</div>
+    </section>
+  {% endif %}
+  <section class="section" aria-labelledby="skills-title">
+    <div class="section-head">
+      <h2 id="skills-title" class="section-title">{{ _("Strongest skills") }}</h2>
+      <a href="/{{ locale }}/skills">{{ _("All skills") }}</a>
+    </div>
+    <ul class="skill-pills">
+      {% for skill in top_skills %}
+        <li class="skill-pill">
+          <a href="/{{ locale }}/skills#skill-{{ skill.slug }}">{{ skill.name }}</a>
+          {{ level_meter(skill.level) }}
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+  {% if latest %}
+    <section class="section" aria-labelledby="latest-title">
+      <div class="section-head">
+        <h2 id="latest-title" class="section-title">{{ _("Most recent role") }}</h2>
+        <a href="/{{ locale }}/experience">{{ _("Full experience") }}</a>
+      </div>
+      <article class="card">
+        <h3 class="card-title">{{ latest.role }} <span class="muted">· {{ latest.company }}</span></h3>
+        <p class="muted">{{ latest.start|date_fmt }} – {% if latest.end %}{{ latest.end|date_fmt }}{% else %}{{ _("Present") }}{% endif %}</p>
+        {% if latest.summary %}<p>{{ latest.summary }}</p>{% endif %}
+      </article>
+    </section>
+  {% endif %}
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends layout %}
+{% block content %}
+  <header class="page-header">
+    <h1 class="page-title">{{ _("About this site") }}</h1>
+    <p class="lead">{{ _("This site is also my portfolio: every part of it is a small demonstration of how I build software with Python.") }}</p>
+  </header>
+  <section class="section" aria-labelledby="stack-title">
+    <h2 id="stack-title" class="section-title">{{ _("How it is built") }}</h2>
+    <ul class="bullets">
+      <li>{{ _("FastAPI serves server-rendered pages with Jinja2; HTMX and Alpine.js add interactivity, and the site works without JavaScript.") }}</li>
+      <li>{{ _("Content lives in YAML and Markdown files validated by Pydantic at startup, in Portuguese and English.") }}</li>
+      <li>{{ _("Tailwind CSS is compiled with a standalone binary installed from pip: there is no Node.js in the project.") }}</li>
+      <li>{{ _("A strict Content-Security-Policy is enforced: no inline scripts and no eval; the few pages that need more use a dedicated, audited policy.") }}</li>
+      <li>{{ _("Type hints are checked with mypy in strict mode, code is linted with ruff, and the test suite covers pages, headers, i18n and the browser.") }}</li>
+    </ul>
+  </section>
+  <section class="section" aria-labelledby="api-title">
+    <h2 id="api-title" class="section-title">{{ _("Open API") }}</h2>
+    <p>{{ _("The same content is available as read-only JSON.") }} <a href="/api/docs"
+    hx-boost="false">{{ _("Open the API reference") }}</a>.</p>
+  </section>
+  <p class="muted text-sm">{{ _("Version") }} {{ app_version }}</p>
+{% endblock %}

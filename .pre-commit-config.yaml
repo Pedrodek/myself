@@ -1,0 +1,40 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-yaml
+      - id: check-toml
+      - id: check-merge-conflict
+      - id: check-added-large-files
+        args: ["--maxkb=600"]
+      - id: detect-private-key
+      - id: end-of-file-fixer
+        exclude: ^(app/web/static/(dist|vendor)/|app/locales/|content/demos/.*\.expected)
+      - id: trailing-whitespace
+        args: ["--markdown-linebreak-ext=md"]
+
+  # Local hooks use the tools pinned in requirements-dev.txt (no version drift vs CI).
+  - repo: local
+    hooks:
+      - id: ruff-check
+        name: ruff check
+        entry: python -m ruff check --fix
+        language: system
+        types: [python]
+      - id: ruff-format
+        name: ruff format
+        entry: python -m ruff format
+        language: system
+        types: [python]
+      - id: djlint
+        name: djlint (Jinja templates)
+        entry: python -m djlint --check
+        language: system
+        files: ^app/web/templates/.*\.html$
+      - id: mypy
+        name: mypy (strict)
+        entry: python -m mypy
+        language: system
+        types: [python]
+        files: ^app/
+        pass_filenames: false

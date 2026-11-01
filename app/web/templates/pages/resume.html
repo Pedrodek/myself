@@ -1,0 +1,77 @@
+{% extends layout %}
+{% from "components/macros.html" import icon %}
+{% block content %}
+  <div class="resume">
+    <div class="resume-actions no-print">
+      <button type="button" class="btn" x-data="printPage" @click="print">{{ icon("printer") }}{{ _("Print") }}</button>
+      {% if pdf_url %}
+        <a class="btn btn-primary"
+           href="{{ pdf_url }}"
+           hx-boost="false"
+           download>{{ icon("download") }}{{ _("Download PDF") }}</a>
+      {% endif %}
+    </div>
+    <header class="resume-head">
+      <h1 class="resume-name">{{ profile.name }}</h1>
+      <p class="resume-headline">{{ profile.headline }}</p>
+      <ul class="resume-contact">
+        {% if profile.email %}<li><a href="mailto:{{ profile.email }}">{{ profile.email }}</a></li>{% endif %}
+        {% if profile.location %}<li>{{ profile.location }}</li>{% endif %}
+        {% for link in profile.links %}
+          <li><a class="resume-link" href="{{ link.url }}">{{ link.label }}</a></li>
+        {% endfor %}
+      </ul>
+    </header>
+    <section class="resume-section" aria-labelledby="r-summary">
+      <h2 id="r-summary">{{ _("Summary") }}</h2>
+      <p class="whitespace-pre-line">{{ profile.summary }}</p>
+    </section>
+    <section class="resume-section" aria-labelledby="r-experience">
+      <h2 id="r-experience">{{ _("Experience") }}</h2>
+      {% for item in content.experience %}
+        <article class="resume-item">
+          <h3>{{ item.role }}, {{ item.company }}</h3>
+          <p class="resume-meta">
+            {{ item.start|date_fmt }} – {% if item.end %}{{ item.end|date_fmt }}{% else %}{{ _("Present") }}{% endif %}
+            {% if item.location %}· {{ item.location }}{% endif %}
+          </p>
+          {% if item.summary %}<p>{{ item.summary }}</p>{% endif %}
+          {% if item.highlights %}
+            <ul>{% for highlight in item.highlights %}<li>{{ highlight }}</li>{% endfor %}</ul>
+          {% endif %}
+        </article>
+      {% endfor %}
+    </section>
+    <section class="resume-section" aria-labelledby="r-skills">
+      <h2 id="r-skills">{{ _("Skills") }}</h2>
+      <dl class="resume-skills">
+        {% for group in content.skill_groups %}
+          <dt>{{ group.category }}</dt>
+          <dd>{% for skill in group.skills %}{{ skill.name }}{% if not loop.last %}, {% endif %}{% endfor %}</dd>
+        {% endfor %}
+      </dl>
+    </section>
+    {% if content.featured_projects %}
+      <section class="resume-section" aria-labelledby="r-projects">
+        <h2 id="r-projects">{{ _("Selected projects") }}</h2>
+        {% for project in content.featured_projects %}
+          <article class="resume-item">
+            <h3>{{ project.title }}</h3>
+            <p>{{ project.summary }}</p>
+          </article>
+        {% endfor %}
+      </section>
+    {% endif %}
+    {% if content.education %}
+      <section class="resume-section" aria-labelledby="r-education">
+        <h2 id="r-education">{{ _("Education") }}</h2>
+        {% for edu in content.education %}
+          <article class="resume-item">
+            <h3>{{ edu.degree }}, {{ edu.institution }}</h3>
+            <p class="resume-meta">{{ edu.start|date_fmt("yyyy") }}{% if edu.end %} – {{ edu.end|date_fmt("yyyy") }}{% endif %}</p>
+          </article>
+        {% endfor %}
+      </section>
+    {% endif %}
+  </div>
+{% endblock %}
