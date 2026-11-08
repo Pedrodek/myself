@@ -11,7 +11,7 @@ hypothesis==6.170.13
 # Quality and security
 ruff==0.17.3
 mypy==2.4.1
-types-PyYAML==6.0.12.20260906
+types-PyYAML==6.0.12.20261103
 types-Pygments==2.21.0.20260819
 djlint==1.47.1  # Jinja/HTML linter and formatter
 pre-commit==4.7.0
