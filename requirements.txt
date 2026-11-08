@@ -12,7 +12,7 @@
 # Web server
 fastapi==0.162.0
 uvicorn[standard]==0.54.0
-python-multipart==0.0.32  # form parsing (contact form)
+python-multipart==0.0.33  # form parsing (contact form)
 
 # Server-rendered UI
 jinja2==3.1.6
@@ -20,7 +20,7 @@ jinja2-fragments==1.12.0  # render Jinja blocks as HTMX partials
 babel==2.18.0  # pt-BR/en i18n and locale-aware dates
 
 # Content and settings
-pydantic==2.14.1
+pydantic==2.14.2
 pydantic-settings==2.16.2
 email-validator==2.3.0  # pydantic EmailStr
 PyYAML==6.0.3
@@ -29,13 +29,13 @@ markdown-it-py==4.2.0
 Pygments==2.21.0  # code highlighting
 
 # Persistence (guestbook, skill endorsements, messages)
-SQLAlchemy[asyncio]==2.1.6
+SQLAlchemy[asyncio]==2.1.8
 aiosqlite==0.22.1
 alembic==1.20.1
 
 # Integrations and protection
 httpx2==2.16.0  # GitHub API client; maintained successor of httpx, preferred by Starlette's TestClient
-cachetools==7.2.7  # TTL cache for API responses
+cachetools==7.2.8  # TTL cache for API responses
 limits==5.8.0  # rate limiting (use through a FastAPI dependency)
 
 # CLI, web terminal and charts
