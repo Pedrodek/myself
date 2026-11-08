@@ -2,7 +2,7 @@
 
 # Tests
 pytest==9.2.0
-pytest-asyncio==1.4.1
+pytest-asyncio==1.4.1.post1
 pytest-cov==7.1.0
 pytest-playwright==0.10.0  # E2E; install browsers with: playwright install chromium
 playwright==1.64.1  # also used to export the resume as PDF
